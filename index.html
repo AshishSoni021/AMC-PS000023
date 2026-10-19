@@ -1,0 +1,2330 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AMC-One Grid | One Ahmedabad Digital Citizen Services Platform (PS000023)</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter, JetBrains Mono, Noto Sans Gujarati -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+Gujarati:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'Noto Sans Gujarati', 'sans-serif'],
+            gujarati: ['Noto Sans Gujarati', 'Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            civic: {
+              950: '#090E1A',
+              900: '#0F172A',
+              800: '#1E293B',
+              700: '#1E3A8A',
+            },
+            heritage: {
+              500: '#F97316',
+              600: '#EA580C',
+              700: '#C2410C',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Inter', 'Noto Sans Gujarati', sans-serif;
+      background-color: #F1F5F9;
+      color: #0F172A;
+    }
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #E2E8F0;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #94A3B8;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #64748B;
+    }
+    /* Animated Audio Bars for Bhashini Voice AI */
+    @keyframes soundwave {
+      0%, 100% { height: 4px; }
+      50% { height: 20px; }
+    }
+    .wave-bar {
+      width: 3px;
+      background-color: #EA580C;
+      border-radius: 999px;
+      animation: soundwave 0.7s ease-in-out infinite;
+    }
+    .wave-bar:nth-child(2) { animation-delay: 0.1s; }
+    .wave-bar:nth-child(3) { animation-delay: 0.2s; }
+    .wave-bar:nth-child(4) { animation-delay: 0.3s; }
+    .wave-bar:nth-child(5) { animation-delay: 0.15s; }
+    .wave-bar:nth-child(6) { animation-delay: 0.25s; }
+
+    /* Thermal Receipt jagged edge */
+    .thermal-receipt {
+      background: #FFFDF9;
+      background-image: radial-gradient(#E5E7EB 1px, transparent 0);
+      background-size: 16px 16px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Map Zone Hover */
+    .gis-zone {
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+    }
+    .gis-zone:hover {
+      filter: brightness(1.08);
+      transform: translateY(-2px);
+    }
+    @keyframes scanline {
+      0% { top: 0%; }
+      50% { top: 92%; }
+      100% { top: 0%; }
+    }
+    .ai-scanline {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #10B981, #EA580C, transparent);
+      box-shadow: 0 0 10px #10B981;
+      animation: scanline 2.8s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-orange-500 selection:text-white">
+
+  <!-- ===================================================================== -->
+  <!-- TOP PRESENTATION DAY ARMOUR & GLOBAL NAVIGATION HEADER                -->
+  <!-- ===================================================================== -->
+  <header class="sticky top-0 z-40 bg-civic-900 text-white shadow-xl border-b border-slate-800">
+    <!-- Top Sub-Bar: Judge Presentation Controls -->
+    <div class="bg-civic-950 px-3 sm:px-6 py-1.5 border-b border-slate-800/80 flex flex-wrap items-center justify-between gap-2 text-xs">
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-orange-500/20 border border-orange-500/40 text-orange-400 font-semibold">
+          <i class="fa-solid fa-bolt text-[10px]"></i> PS000023 LIVE PROTOTYPE
+        </span>
+        <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 font-medium">
+          <i class="fa-solid fa-shield-halved text-[10px]"></i> DPDP Act 2023 Compliant • SHA-256 Tokenized
+        </span>
+        <span class="hidden md:inline-flex items-center gap-1.5 text-slate-400 font-mono">
+          <i class="fa-solid fa-network-wired text-sky-400"></i> Kong API Gateway + Playwright RPA Bridge: <strong class="text-emerald-400">ONLINE</strong>
+        </span>
+      </div>
+
+      <div class="flex items-center gap-2 flex-wrap">
+        <!-- Quick Judge Demo Triggers -->
+        <button onclick="triggerGlobalSLABreachDemo()" class="px-2.5 py-1 rounded bg-red-500/20 hover:bg-red-500/30 border border-red-500/40 text-red-300 font-medium transition flex items-center gap-1.5" title="Force an immediate SLA Breach to demonstrate auto-escalation to Deputy Commissioner">
+          <i class="fa-solid fa-triangle-exclamation text-red-400"></i> Simulate SLA Breach
+        </button>
+        <button onclick="toggleRPADrawer()" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-sky-300 font-mono transition flex items-center gap-1.5">
+          <i class="fa-solid fa-terminal text-emerald-400"></i> RPA Logs
+          <span id="rpaBadgeCount" class="px-1.5 py-0.2 bg-emerald-500/20 text-emerald-300 rounded text-[10px]">6</span>
+        </button>
+        <button onclick="resetFullDemoState()" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition flex items-center gap-1" title="Reset prototype state to clean defaults">
+          <i class="fa-solid fa-rotate-right"></i> Reset
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Header Bar -->
+    <div class="max-w-[1600px] mx-auto px-3 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-4">
+      <!-- Brand Identity -->
+      <div class="flex items-center gap-3">
+        <!-- Custom SVG Heritage Crest -->
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-orange-500 to-amber-700 p-0.5 shadow-lg shadow-orange-600/20 flex-shrink-0">
+          <div class="w-full h-full bg-civic-900 rounded-[10px] flex items-center justify-center relative overflow-hidden">
+            <svg class="w-7 h-7 text-orange-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3L3 8v2h18V8l-9-5z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 10v8m4-8v8m6-8v8m4-8v8M3 18h18M2 21h20" />
+              <circle cx="12" cy="7.5" r="1" fill="currentColor" />
+            </svg>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-lg sm:text-xl font-extrabold tracking-tight text-white">AMC-One Grid</h1>
+            <span class="text-xs px-2 py-0.5 rounded bg-orange-600 font-semibold text-white font-gujarati">અમદાવાદ મ્યુનિસિપલ કોર્પોરેશન</span>
+          </div>
+          <p class="text-xs text-slate-400">Ahmedabad Municipal Corporation — Unified Digital Citizen Services Platform</p>
+        </div>
+      </div>
+
+      <!-- 3-Stakeholder View Switcher + Split-Screen Toggle -->
+      <div class="flex flex-wrap items-center gap-2">
+        <div class="bg-slate-800/90 p-1 rounded-xl border border-slate-700 flex flex-wrap items-center gap-1">
+          <button id="tabBtnCitizen" onclick="switchViewMode('CITIZEN')" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition flex items-center gap-2 bg-orange-600 text-white shadow">
+            <i class="fa-solid fa-user-check"></i>
+            <span>1. Citizen Portal</span>
+          </button>
+          <button id="tabBtnKiosk" onclick="switchViewMode('KIOSK')" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-700/60">
+            <i class="fa-solid fa-store"></i>
+            <span>2. Jan Seva Kiosk</span>
+          </button>
+          <button id="tabBtnOfficer" onclick="switchViewMode('OFFICER')" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-700/60">
+            <i class="fa-solid fa-building-columns"></i>
+            <span>3. AMC Officer Command</span>
+          </button>
+        </div>
+
+        <!-- Split-Screen Judge Demo Mode Toggle -->
+        <button id="splitModeBtn" onclick="toggleSplitScreenJudgeMode()" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold border border-amber-400/50 bg-gradient-to-r from-amber-500/20 to-orange-500/20 hover:from-amber-500/30 hover:to-orange-500/30 text-amber-300 transition flex items-center gap-2 shadow-sm">
+          <i class="fa-solid fa-table-columns"></i>
+          <span id="splitModeBtnText">⚡ Split-Screen Judge Mode: OFF</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================================================================== -->
+  <!-- FLOATING SIMULATED SMS & WHATSAPP TOAST NOTIFICATION STACK            -->
+  <!-- ===================================================================== -->
+  <div id="toastContainer" class="fixed top-28 right-4 z-50 flex flex-col gap-2.5 max-w-sm w-full pointer-events-none"></div>
+
+  <!-- ===================================================================== -->
+  <!-- SPLIT-SCREEN JUDGE BANNER (Shown only when Split-Screen is ON)        -->
+  <!-- ===================================================================== -->
+  <div id="splitScreenBanner" class="hidden bg-gradient-to-r from-amber-500 via-orange-600 to-amber-600 text-white px-4 py-2 text-xs sm:text-sm font-medium shadow-md">
+    <div class="max-w-[1600px] mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="px-2 py-0.5 rounded bg-black/30 font-mono font-bold text-amber-200">50/50 LIVE JUDGE SYNC</span>
+        <span><strong>Left:</strong> Citizen Portal (Rajeshbhai Patel) &nbsp;|&nbsp; <strong>Right:</strong> Approve or advance a request in AMC Command Center or Kiosk and watch the Citizen's Pizza-Tracker update live!</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-xs text-amber-100">Right Pane View:</span>
+        <button id="splitRightOfficerBtn" onclick="setSplitRightPane('OFFICER')" class="px-2.5 py-1 rounded bg-white text-slate-900 font-bold text-xs shadow">🏛️ AMC Officer View</button>
+        <button id="splitRightKioskBtn" onclick="setSplitRightPane('KIOSK')" class="px-2.5 py-1 rounded bg-black/25 hover:bg-black/40 text-white font-semibold text-xs">🏪 Jan Seva Kiosk View</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MAIN WORKSPACE CONTAINER (ADAPTS TO SINGLE OR 50/50 SPLIT VIEW)       -->
+  <!-- ===================================================================== -->
+  <main id="mainWorkspaceGrid" class="flex-1 max-w-[1600px] w-full mx-auto px-3 sm:px-6 py-5 grid grid-cols-1 gap-6 pb-24">
+
+    <!-- =================================================================== -->
+    <!-- STAKEHOLDER VIEW 1: CITIZEN PORTAL (AMC-ID UNIFIED DASHBOARD)       -->
+    <!-- =================================================================== -->
+    <section id="viewCitizen" class="space-y-6">
+
+      <!-- 1A. SINGLE SIGN-ON (AMC-ID) CITIZEN PROFILE & LINKED ASSETS CARD -->
+      <div class="bg-gradient-to-r from-civic-900 via-slate-900 to-civic-700 rounded-2xl p-5 text-white shadow-lg border border-slate-800 relative overflow-hidden">
+        <!-- Decorative Heritage Pattern Overlay -->
+        <div class="absolute -right-10 -bottom-10 opacity-10 pointer-events-none">
+          <svg class="w-64 h-64 text-orange-400" viewBox="0 0 100 100" fill="currentColor">
+            <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="4" fill="none" />
+            <circle cx="50" cy="50" r="30" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="6 4" />
+            <circle cx="50" cy="50" r="15" stroke="currentColor" stroke-width="2" fill="none" />
+          </svg>
+        </div>
+
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 relative z-10">
+          <!-- Citizen Identity -->
+          <div class="flex items-start sm:items-center gap-4">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center text-xl font-extrabold shadow-md border-2 border-white/20 flex-shrink-0">
+              RP
+            </div>
+            <div>
+              <div class="flex flex-wrap items-center gap-2">
+                <h2 class="text-lg sm:text-xl font-bold text-white">Rajeshbhai Patel <span class="text-orange-300 font-gujarati font-normal text-base">(રાજેશભાઈ પટેલ)</span></h2>
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
+                  <i class="fa-solid fa-circle-check text-[10px]"></i> AMC-ID: AMC-2026-8941
+                </span>
+              </div>
+              <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-300 mt-1">
+                <span><i class="fa-solid fa-fingerprint text-orange-400 mr-1"></i>Aadhaar: <strong class="font-mono text-white">XXXX-XXXX-8492</strong> <span class="text-[10px] text-emerald-400 font-mono">(SHA-256 Tokenized)</span></span>
+                <span><i class="fa-solid fa-location-dot text-orange-400 mr-1"></i>Ward: <strong class="text-white">Navrangpura (West Zone)</strong></span>
+                <span><i class="fa-solid fa-phone text-orange-400 mr-1"></i>+91 98250 12345</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 1-Click Link AMC Asset CTA -->
+          <div class="flex flex-wrap items-center gap-2">
+            <button onclick="openLinkAssetModal()" class="px-3.5 py-2 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-semibold text-xs sm:text-sm shadow-md transition flex items-center gap-2">
+              <i class="fa-solid fa-link"></i> 1-Click Link AMC Asset
+            </button>
+          </div>
+        </div>
+
+        <!-- Federated Linked Legacy Identifiers Bar -->
+        <div class="mt-4 pt-3.5 border-t border-slate-700/80 flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2 flex-wrap" id="linkedAssetsList">
+            <span class="text-[11px] uppercase tracking-wider font-semibold text-slate-400 mr-1">Federated SSO Linked IDs:</span>
+            <!-- Rendered dynamically via JS -->
+          </div>
+          <span class="text-[11px] text-emerald-400 font-mono flex items-center gap-1">
+            <i class="fa-solid fa-bolt"></i> GraphQL BFF Sync: 42ms
+          </span>
+        </div>
+      </div>
+
+      <!-- 1B. UNIFIED BILLS & 1-CLICK CHECKOUT ROW -->
+      <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 class="text-base sm:text-lg font-bold text-slate-900">Unified Municipal Dues & 1-Click Checkout</h3>
+              <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-amber-100 text-amber-800 border border-amber-300 animate-pulse">
+                <i class="fa-solid fa-clock mr-1"></i>10% Early-Bird Rebate ends in 4 days
+              </span>
+            </div>
+            <p class="text-xs text-slate-500">Consolidated across AMC Property Tax, Water/Sewerage Utility & Traffic E-Challan Portals</p>
+          </div>
+
+          <button id="payAllDuesBtn" onclick="openUnifiedPaymentModal()" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-indian-rupee-sign"></i>
+            <span id="payAllDuesBtnLabel">Pay All Dues (₹5,470)</span>
+          </button>
+        </div>
+
+        <!-- 3 Consolidated Bill Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="citizenBillsGrid">
+          <!-- Populated dynamically by renderCitizenBills() -->
+        </div>
+      </div>
+
+      <!-- 1C. LIVE "PIZZA-STYLE" SERVICE & GRIEVANCE TRACKER -->
+      <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 class="text-base sm:text-lg font-bold text-slate-900">Live "Pizza-Style" Service & Grievance Tracker</h3>
+              <span class="px-2 py-0.5 rounded text-[11px] font-mono font-semibold bg-sky-100 text-sky-800">Kafka + WebSockets Real-Time</span>
+            </div>
+            <p class="text-xs text-slate-500">Every stage is bound to a statutory SLA timer under the Gujarat Right of Citizens to Public Services Act</p>
+          </div>
+          <div class="text-xs text-slate-500 font-mono">
+            Active Trackers: <strong id="citizenActiveTrackerCount" class="text-slate-900">3</strong>
+          </div>
+        </div>
+
+        <!-- Active Requests List -->
+        <div id="pizzaTrackerContainer" class="space-y-4">
+          <!-- Populated dynamically by renderPizzaTrackers() -->
+        </div>
+      </div>
+
+      <!-- 1D. TWO-COLUMN INTERACTIVE AI ROW: VISION AUTO-TRIAGE + MULTILINGUAL BHASHINI AI CO-PILOT -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+        <!-- LEFT CARD: AI VISION AUTO-TRIAGE GRIEVANCE REPORTER (3-Layer Verification Pipeline) -->
+        <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <span class="w-8 h-8 rounded-lg bg-orange-100 text-orange-600 flex items-center justify-center font-bold">
+                  <i class="fa-solid fa-camera-retro"></i>
+                </span>
+                <div>
+                  <h3 class="text-base font-bold text-slate-900">AI Vision Auto-Triage Grievance Reporter</h3>
+                  <p class="text-[11px] text-slate-500">YOLOv8 Classification + PostGIS Ward Geo-Fence + 30m pHash Deduplication</p>
+                </div>
+              </div>
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-purple-100 text-purple-800">YOLOv8-Civic</span>
+            </div>
+
+            <!-- 3 Preset Ahmedabad Scenarios -->
+            <div class="mb-3">
+              <label class="block text-xs font-semibold text-slate-700 mb-1.5">Select Preset Ahmedabad Civic Issue Scenario:</label>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                <button onclick="selectVisionScenario('POTHOLE')" id="scenBtn_POTHOLE" class="p-2.5 rounded-xl border-2 border-orange-500 bg-orange-50/70 text-left transition">
+                  <div class="flex items-center justify-between text-xs font-bold text-slate-900">
+                    <span>🕳️ Pothole</span>
+                    <span class="text-[10px] px-1.5 py-0.2 rounded bg-red-100 text-red-700">High</span>
+                  </div>
+                  <p class="text-[11px] text-slate-600 mt-0.5 truncate">Near Law Garden, Navrangpura</p>
+                </button>
+                <button onclick="selectVisionScenario('GARBAGE')" id="scenBtn_GARBAGE" class="p-2.5 rounded-xl border border-slate-200 hover:border-slate-300 bg-slate-50 text-left transition">
+                  <div class="flex items-center justify-between text-xs font-bold text-slate-900">
+                    <span>🗑️ Garbage</span>
+                    <span class="text-[10px] px-1.5 py-0.2 rounded bg-amber-100 text-amber-800">High</span>
+                  </div>
+                  <p class="text-[11px] text-slate-600 mt-0.5 truncate">Near Kankaria, Maninagar</p>
+                </button>
+                <button onclick="selectVisionScenario('STREETLIGHT')" id="scenBtn_STREETLIGHT" class="p-2.5 rounded-xl border border-slate-200 hover:border-slate-300 bg-slate-50 text-left transition">
+                  <div class="flex items-center justify-between text-xs font-bold text-slate-900">
+                    <span>💡 Streetlight</span>
+                    <span class="text-[10px] px-1.5 py-0.2 rounded bg-sky-100 text-sky-800">Med</span>
+                  </div>
+                  <p class="text-[11px] text-slate-600 mt-0.5 truncate">Bopal Crossroad, New West</p>
+                </button>
+              </div>
+            </div>
+
+            <!-- Simulated Camera Bounding-Box Preview -->
+            <div class="relative rounded-xl overflow-hidden bg-slate-900 border border-slate-800 h-44 mb-3 flex items-center justify-center">
+              <div class="ai-scanline"></div>
+              <!-- Dynamic SVG Scene Preview -->
+              <div id="visionCanvasPreview" class="w-full h-full flex items-center justify-center relative p-4">
+                <!-- Populated by updateVisionPreviewUI() -->
+              </div>
+            </div>
+
+            <!-- 3-Layer Verification Pipeline Breakdown -->
+            <div class="bg-slate-50 rounded-xl p-3 border border-slate-200 space-y-2 text-xs mb-3">
+              <div class="font-bold text-slate-800 flex items-center justify-between">
+                <span><i class="fa-solid fa-layer-group text-orange-600 mr-1.5"></i>3-Layer Verification Pipeline</span>
+                <span class="text-[10px] font-mono text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">VERIFIED IN 240ms</span>
+              </div>
+
+              <!-- Layer 1: EXIF & PostGIS -->
+              <div class="flex items-center justify-between py-1 border-b border-slate-200/70">
+                <span class="text-slate-600"><strong class="text-slate-800">1. EXIF & PostGIS Geo-Fence:</strong></span>
+                <span id="visionLayer1Text" class="font-mono text-[11px] text-slate-900 font-semibold">23.0268° N, 72.5610° E → Navrangpura (West Zone)</span>
+              </div>
+
+              <!-- Layer 2: YOLOv8 Vision -->
+              <div class="flex items-center justify-between py-1 border-b border-slate-200/70">
+                <span class="text-slate-600"><strong class="text-slate-800">2. YOLOv8 Classification:</strong></span>
+                <span id="visionLayer2Text" class="font-mono text-[11px] text-emerald-700 font-bold">96.8% Road Pothole — High Severity</span>
+              </div>
+
+              <!-- Layer 3: 30m Spatial Duplicate Check Toggle -->
+              <div class="flex items-center justify-between pt-1">
+                <div>
+                  <span class="text-slate-800 font-bold">3. 30m Spatial Duplicate Check (<code class="font-mono text-orange-600">pHash</code>):</span>
+                  <p id="visionLayer3Subtext" class="text-[11px] text-slate-500">Toggle to test Haversine ≤ 30m duplicate ticket merge vs new ticket</p>
+                </div>
+                <label class="inline-flex items-center cursor-pointer">
+                  <input type="checkbox" id="duplicateCheckToggle" onchange="toggleDuplicateSimMode()" class="sr-only peer">
+                  <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all relative peer-checked:bg-amber-600"></div>
+                  <span class="ml-2 text-[11px] font-semibold text-slate-700">Simulate 18m Match</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Optional Custom Note Input -->
+            <div class="mb-3">
+              <input id="customGrievanceNote" type="text" placeholder="Optional landmark note (e.g., Opposite municipal garden gate #2)..." class="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:border-orange-500 bg-slate-50" />
+            </div>
+          </div>
+
+          <!-- Submit / Merge Button -->
+          <button id="submitVisionGrievanceBtn" onclick="handleVisionGrievanceSubmit()" class="w-full py-2.5 px-4 rounded-xl bg-civic-900 hover:bg-slate-800 text-white font-bold text-xs sm:text-sm shadow transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-paper-plane text-orange-400"></i>
+            <span id="submitVisionBtnText">Submit Verified Grievance to Navrangpura Ward</span>
+          </button>
+        </div>
+
+        <!-- RIGHT CARD: MULTILINGUAL VOICE & RAG AI CO-PILOT (BHASHINI + ACTION CARDS) -->
+        <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between">
+          <div>
+            <!-- Header -->
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <span class="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center font-bold">
+                  <i class="fa-solid fa-microphone-lines"></i>
+                </span>
+                <div>
+                  <h3 class="text-base font-bold text-slate-900">Amdavad Sahayak — Multilingual AI Co-Pilot</h3>
+                  <p class="text-[11px] text-slate-500">Bhashini Voice ASR + AMC Citizen Charter RAG + Zero-Navigation Action Cards</p>
+                </div>
+              </div>
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-orange-100 text-orange-800 font-gujarati">ગુજરાતી • हिन्दी • EN</span>
+            </div>
+
+            <!-- Clickable Pre-Recorded Gujarati Voice Prompt Chips (Presentation Day Armour) -->
+            <div class="mb-3 bg-orange-50/70 border border-orange-200/80 rounded-xl p-2.5">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-[11px] font-bold text-orange-900 flex items-center gap-1.5">
+                  <i class="fa-solid fa-volume-high text-orange-600"></i>
+                  Clickable Gujarati Voice Chips (Noise-Proof Demo Armour):
+                </span>
+                <div id="voiceWaveformIndicator" class="hidden items-center gap-0.5 h-4">
+                  <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+                  <span class="text-[10px] font-mono text-orange-700 ml-1">Bhashini ASR...</span>
+                </div>
+              </div>
+              <div class="flex flex-col gap-1.5">
+                <button onclick="triggerVoicePromptChip('TAX')" class="text-left px-3 py-1.5 rounded-lg bg-white hover:bg-orange-100/70 border border-orange-200 text-xs transition flex items-center justify-between group">
+                  <span class="font-gujarati font-semibold text-slate-900">🔊 "મારે પ્રોપર્ટી ટેક્સ ભરવો છે" <span class="font-sans font-normal text-slate-500">(Pay my Property Tax)</span></span>
+                  <i class="fa-solid fa-play text-[10px] text-orange-600 group-hover:translate-x-0.5 transition"></i>
+                </button>
+                <button onclick="triggerVoicePromptChip('GUMASTA')" class="text-left px-3 py-1.5 rounded-lg bg-white hover:bg-orange-100/70 border border-orange-200 text-xs transition flex items-center justify-between group">
+                  <span class="font-gujarati font-semibold text-slate-900">🔊 "દુકાનનું ગુમાસ્તા લાયસન્સ રિન્યુ કરવું છે" <span class="font-sans font-normal text-slate-500">(Renew Shop Gumasta License)</span></span>
+                  <i class="fa-solid fa-play text-[10px] text-orange-600 group-hover:translate-x-0.5 transition"></i>
+                </button>
+                <button onclick="triggerVoicePromptChip('WATER_LEAK')" class="text-left px-3 py-1.5 rounded-lg bg-white hover:bg-orange-100/70 border border-orange-200 text-xs transition flex items-center justify-between group">
+                  <span class="font-gujarati font-semibold text-slate-900">🔊 "નવરંગપુરામાં પાણીની લાઈન લીકેજ છે" <span class="font-sans font-normal text-slate-500">(Report Water Leakage in Navrangpura)</span></span>
+                  <i class="fa-solid fa-play text-[10px] text-orange-600 group-hover:translate-x-0.5 transition"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Chat Conversation Stream with Embedded Action Cards -->
+            <div id="aiChatStream" class="h-64 overflow-y-auto rounded-xl bg-slate-50 border border-slate-200 p-3 space-y-3 text-xs mb-3">
+              <!-- Initial greeting populated by JS -->
+            </div>
+          </div>
+
+          <!-- Chat Input Bar -->
+          <div class="flex items-center gap-2">
+            <input id="aiChatInput" type="text" onkeydown="if(event.key==='Enter') sendCustomAIChat()" placeholder="Ask in Gujarati, Hindi, or English (e.g., Renew shop license)..." class="flex-1 px-3.5 py-2.5 text-xs rounded-xl border border-slate-200 focus:outline-none focus:border-orange-500 bg-slate-50" />
+            <button onclick="sendCustomAIChat()" class="px-4 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs transition flex items-center gap-1.5">
+              <i class="fa-solid fa-paper-plane"></i> Send
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1E. DIGILOCKER & AMC CERTIFICATE WALLET -->
+      <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 class="text-base sm:text-lg font-bold text-slate-900">DigiLocker & AMC Verified Certificate Wallet</h3>
+              <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
+                <i class="fa-solid fa-qrcode mr-1"></i>Cryptographically Signed
+              </span>
+            </div>
+            <p class="text-xs text-slate-500">Instant access to issued municipal certificates, permits, and tax receipts linked to <code class="font-mono text-slate-700">AMC-2026-8941</code></p>
+          </div>
+        </div>
+
+        <div id="certificateWalletGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- Populated dynamically by renderCertificateWallet() -->
+        </div>
+      </div>
+
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- STAKEHOLDER VIEW 2: JAN SEVA KENDRA KIOSK (OPERATOR ASSISTED MODE)  -->
+    <!-- =================================================================== -->
+    <section id="viewKiosk" class="hidden space-y-6">
+
+      <!-- Kiosk Header Banner -->
+      <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-2xl p-5 text-white shadow-lg border border-indigo-800/60">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 rounded-2xl bg-indigo-500/20 border border-indigo-400/40 flex items-center justify-center text-indigo-300 text-xl font-bold">
+              <i class="fa-solid fa-computer"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2 flex-wrap">
+                <h2 class="text-lg sm:text-xl font-bold">Jan Seva Kendra — Operator Assisted Kiosk Mode</h2>
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-mono bg-indigo-500/30 border border-indigo-400/40 text-indigo-200">
+                  Operator: JSK-NAVRANGPURA-04
+                </span>
+              </div>
+              <p class="text-xs text-slate-300 mt-0.5">Zero-Password Citizen Assistance via 15-Minute Delegated Consent OTP & AI OCR Document Pre-Validator</p>
+            </div>
+          </div>
+
+          <!-- Active Session Status Timer Pill -->
+          <div id="kioskSessionBadge" class="px-4 py-2 rounded-xl bg-slate-800/90 border border-slate-700 flex items-center gap-3">
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping" id="kioskStatusDot"></span>
+            <div class="text-xs">
+              <div class="text-slate-400 font-medium" id="kioskSessionStatusLabel">Delegated Session Status</div>
+              <div class="font-mono font-bold text-amber-300" id="kioskTimerDisplay">AWAITING CITIZEN OTP CONSENT</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- LEFT 5 COLS: STEP 1 — 15-MINUTE DELEGATED CONSENT OTP WORKFLOW -->
+        <div class="lg:col-span-5 bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-700 font-bold text-xs">STEP 1 • DELEGATED CITIZEN ACCESS</span>
+              <span class="text-[11px] font-mono text-slate-500">DPDP Consent Log Enabled</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900 mb-1">Walk-In Citizen OTP Consent Verification</h3>
+            <p class="text-xs text-slate-500 mb-4">Operators never ask for citizen passwords. Enter the citizen's mobile number to trigger a temporary 15-minute delegated session token.</p>
+
+            <!-- Step 1A: Citizen Mobile Input -->
+            <div class="space-y-3">
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">Walk-In Citizen Mobile Number</label>
+                <div class="flex gap-2">
+                  <input id="kioskCitizenMobile" type="text" value="98250 12345" class="flex-1 px-3.5 py-2 text-sm font-mono rounded-xl border border-slate-300 bg-slate-50 focus:outline-none focus:border-indigo-600" />
+                  <button onclick="requestKioskConsentOTP()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow transition whitespace-nowrap">
+                    <i class="fa-solid fa-paper-plane mr-1"></i> Request Citizen Consent OTP
+                  </button>
+                </div>
+              </div>
+
+              <!-- Step 1B: Enter 6-Digit OTP -->
+              <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2.5">
+                <div class="flex items-center justify-between">
+                  <label class="text-xs font-semibold text-slate-700">Enter 6-Digit Citizen Consent OTP</label>
+                  <button onclick="autoFillKioskDemoOTP()" class="text-[11px] font-bold text-indigo-600 hover:text-indigo-800 underline flex items-center gap-1">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Auto-Fill Demo OTP (482910)
+                  </button>
+                </div>
+                <div class="flex gap-2">
+                  <input id="kioskOtpInput" type="text" maxlength="6" placeholder="Enter 482910" class="flex-1 px-3.5 py-2 text-sm font-mono tracking-widest font-bold rounded-xl border border-slate-300 bg-white focus:outline-none focus:border-emerald-600" />
+                  <button onclick="verifyKioskConsentOTP()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow transition">
+                    <i class="fa-solid fa-unlock-keyhole mr-1"></i> Unlock 15:00 Session
+                  </button>
+                </div>
+              </div>
+
+              <!-- Unlocked Citizen Profile Preview inside Kiosk -->
+              <div id="kioskUnlockedCitizenBox" class="hidden p-3.5 rounded-xl bg-emerald-50/90 border border-emerald-300 space-y-1.5">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-emerald-900 flex items-center gap-1.5">
+                    <i class="fa-solid fa-user-shield text-emerald-600"></i> Delegated Session Active: Rajeshbhai Patel
+                  </span>
+                  <button onclick="revokeKioskSession()" class="text-[11px] text-red-600 hover:underline font-semibold">End Session</button>
+                </div>
+                <p class="text-[11px] text-emerald-800 font-mono">AMC-ID: AMC-2026-8941 • Ward: Navrangpura • DigiLocker: 4 Verified Docs</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Operator Audit Trail Box -->
+          <div class="mt-4 pt-3 border-t border-slate-200">
+            <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Immutable Kiosk Operator Audit Log</div>
+            <div id="kioskAuditLogList" class="h-28 overflow-y-auto bg-slate-900 text-slate-300 rounded-xl p-2.5 font-mono text-[11px] space-y-1">
+              <div>[17:10:02] Terminal JSK-NAVRANGPURA-04 initialized.</div>
+              <div>[17:10:05] Connected to AMC-ID Keycloak OIDC Federation.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT 7 COLS: STEP 2 — FAST-SCAN & AI DOCUMENT PRE-VALIDATOR + THERMAL RECEIPT -->
+        <div class="lg:col-span-7 bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-2.5 py-1 rounded-lg bg-orange-50 text-orange-700 font-bold text-xs">STEP 2 • FAST-SCAN & AI OCR PRE-VALIDATOR</span>
+              <span class="text-[11px] font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded font-semibold">Prevents Clerk Rejections</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900 mb-1">Assisted Service Filing & AI Document Verification</h3>
+            <p class="text-xs text-slate-500 mb-4">Pre-validates scanned physical documents for blurriness, missing signatures, and Aadhaar/Name match before submitting to AMC departments.</p>
+
+            <!-- Select Service to File -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mb-4">
+              <button onclick="selectKioskService('SENIOR_CITIZEN')" id="kioskSrv_SENIOR_CITIZEN" class="p-3 rounded-xl border-2 border-indigo-600 bg-indigo-50/60 text-left transition">
+                <div class="text-xs font-bold text-slate-900"><i class="fa-solid fa-person-cane text-indigo-600 mr-1"></i> Senior Citizen Card</div>
+                <p class="text-[11px] text-slate-500 mt-0.5">SLA: 24 Hours • Fee: ₹50</p>
+              </button>
+              <button onclick="selectKioskService('MARRIAGE_REG')" id="kioskSrv_MARRIAGE_REG" class="p-3 rounded-xl border border-slate-200 hover:border-slate-300 bg-slate-50 text-left transition">
+                <div class="text-xs font-bold text-slate-900"><i class="fa-solid fa-ring text-orange-600 mr-1"></i> Marriage Certificate</div>
+                <p class="text-[11px] text-slate-500 mt-0.5">SLA: 48 Hours • Fee: ₹200</p>
+              </button>
+              <button onclick="selectKioskService('BPL_INCOME')" id="kioskSrv_BPL_INCOME" class="p-3 rounded-xl border border-slate-200 hover:border-slate-300 bg-slate-50 text-left transition">
+                <div class="text-xs font-bold text-slate-900"><i class="fa-solid fa-file-shield text-emerald-600 mr-1"></i> BPL / Income Cert</div>
+                <p class="text-[11px] text-slate-500 mt-0.5">SLA: 72 Hours • Fee: ₹20</p>
+              </button>
+            </div>
+
+            <!-- AI OCR Pre-Validator Simulator -->
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 mb-4">
+              <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                <span class="text-xs font-bold text-slate-800"><i class="fa-solid fa-magnifying-glass-chart text-indigo-600 mr-1.5"></i>AI Document OCR Pre-Check Simulator:</span>
+                <div class="flex items-center gap-2">
+                  <button onclick="runKioskOCRCheck('PASS')" class="px-3 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs transition">
+                    <i class="fa-solid fa-check mr-1"></i> Scan Valid Document (Pass)
+                  </button>
+                  <button onclick="runKioskOCRCheck('BLUR')" class="px-3 py-1 rounded-lg bg-amber-600 hover:bg-amber-500 text-white font-semibold text-xs transition">
+                    <i class="fa-solid fa-triangle-exclamation mr-1"></i> Simulate Blurry/Unsigned Scan
+                  </button>
+                </div>
+              </div>
+
+              <!-- OCR Diagnostics Output -->
+              <div id="kioskOCRResultBox" class="p-3 rounded-lg bg-white border border-emerald-200 text-xs space-y-1.5">
+                <div class="flex items-center justify-between font-bold text-emerald-800">
+                  <span><i class="fa-solid fa-circle-check text-emerald-600 mr-1"></i> AI OCR Pre-Validation PASSED (Confidence: 99.1%)</span>
+                  <span class="font-mono text-[11px]">DPI: 300 • Blur: 0.02</span>
+                </div>
+                <div class="grid grid-cols-3 gap-2 pt-1 text-[11px] text-slate-600">
+                  <div><i class="fa-solid fa-check text-emerald-600 mr-1"></i>Name Match: <strong>Verified</strong></div>
+                  <div><i class="fa-solid fa-check text-emerald-600 mr-1"></i>Signature Detected: <strong>Yes</strong></div>
+                  <div><i class="fa-solid fa-check text-emerald-600 mr-1"></i>Ward Stamp: <strong>Navrangpura</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit & Generate Kiosk Thermal Receipt -->
+          <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-200">
+            <div class="text-xs text-slate-600">
+              Collection Mode: <strong class="text-slate-900">Cash / UPI QR at Counter</strong>
+            </div>
+            <button onclick="submitKioskApplicationAndPrint()" class="px-5 py-2.5 rounded-xl bg-civic-900 hover:bg-slate-800 text-white font-bold text-xs sm:text-sm shadow-md transition flex items-center gap-2">
+              <i class="fa-solid fa-receipt text-orange-400"></i>
+              <span>Submit via RPA Bridge & Print Thermal Receipt</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- STAKEHOLDER VIEW 3: AMC OFFICER COMMAND CENTER (DEPARTMENT ADMIN)   -->
+    <!-- =================================================================== -->
+    <section id="viewOfficer" class="hidden space-y-6">
+
+      <!-- Officer Top KPI Ribbon -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200">
+          <div class="text-xs text-slate-500 font-medium">Active Civic Requests</div>
+          <div class="text-2xl font-extrabold text-slate-900 mt-1" id="adminMetricTotal">3</div>
+          <div class="text-[11px] text-emerald-600 font-semibold mt-0.5"><i class="fa-solid fa-arrow-trend-up mr-1"></i>100% Synced with Citizen Portal</div>
+        </div>
+        <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200">
+          <div class="text-xs text-slate-500 font-medium">SLA Compliance Rate</div>
+          <div class="text-2xl font-extrabold text-emerald-600 mt-1" id="adminMetricSLA">96.4%</div>
+          <div class="text-[11px] text-slate-500 mt-0.5">Auto-Escalation to DMC Active</div>
+        </div>
+        <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200">
+          <div class="text-xs text-slate-500 font-medium">Unified Revenue Today</div>
+          <div class="text-2xl font-extrabold text-slate-900 mt-1" id="adminMetricRevenue">₹14,82,400</div>
+          <div class="text-[11px] text-sky-600 font-semibold mt-0.5"><i class="fa-solid fa-bolt mr-1"></i>Real-time UPI + Kiosk Ledger</div>
+        </div>
+        <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200">
+          <div class="text-xs text-slate-500 font-medium">Legacy RPA Bot Queue</div>
+          <div class="text-2xl font-extrabold text-indigo-600 mt-1">99.8% Success</div>
+          <div class="text-[11px] text-slate-500 font-mono mt-0.5">Playwright Pool: 4 Workers Idle</div>
+        </div>
+      </div>
+
+      <!-- GIS Map + Departmental SLA Action Queue Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- LEFT 5 COLS: INTERACTIVE AHMEDABAD 6-ZONE GIS SVG MAP & HEATMAP -->
+        <div class="lg:col-span-5 bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <div>
+                <h3 class="text-base font-bold text-slate-900">Ahmedabad 6-Zone GIS Live Heatmap</h3>
+                <p class="text-xs text-slate-500">Click any AMC Municipal Zone to filter the Departmental SLA Queue</p>
+              </div>
+              <button onclick="filterOfficerQueueByZone('ALL')" id="resetZoneFilterBtn" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-semibold text-slate-700 transition">
+                Show All Zones
+              </button>
+            </div>
+
+            <!-- Interactive SVG Map of Ahmedabad's 6 Municipal Zones + Sabarmati River -->
+            <div class="relative bg-slate-900 rounded-2xl p-3 border border-slate-800 my-3">
+              <div class="flex items-center justify-between text-[11px] text-slate-400 font-mono mb-1 px-1">
+                <span><i class="fa-solid fa-satellite-dish text-emerald-400 mr-1"></i>PostGIS Spatial Engine</span>
+                <span id="selectedZoneLabel" class="text-orange-400 font-bold">Filter: ALL 6 AMC ZONES</span>
+              </div>
+
+              <svg viewBox="0 0 420 310" class="w-full h-auto select-none">
+                <!-- Background Grid -->
+                <defs>
+                  <pattern id="gisGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#1E293B" stroke-width="0.8"/>
+                  </pattern>
+                </defs>
+                <rect width="420" height="310" fill="url(#gisGrid)" rx="12" />
+
+                <!-- 1. NEW WEST ZONE (Bodakdev / Bopal / Gota) -->
+                <g class="gis-zone" onclick="filterOfficerQueueByZone('New West Zone')">
+                  <polygon points="20,40 125,25 135,145 115,245 25,220" fill="#1E3A8A" stroke="#60A5FA" stroke-width="2" fill-opacity="0.75" />
+                  <text x="75" y="125" fill="#EFF6FF" font-size="11" font-weight="bold" text-anchor="middle">NEW WEST</text>
+                  <text x="75" y="140" fill="#93C5FD" font-size="9" text-anchor="middle">Bopal • Bodakdev</text>
+                  <circle cx="75" cy="160" r="11" fill="#0284C7" stroke="#BAE6FD" stroke-width="1.5" />
+                  <text id="mapCount_NewWest" x="75" y="164" fill="#FFF" font-size="10" font-weight="bold" text-anchor="middle">0</text>
+                </g>
+
+                <!-- 2. WEST ZONE (Navrangpura / Paldi / Naranpura) -->
+                <g class="gis-zone" onclick="filterOfficerQueueByZone('West Zone')">
+                  <polygon points="125,25 215,30 205,235 115,245 135,145" fill="#9A3412" stroke="#FB923C" stroke-width="2.2" fill-opacity="0.85" />
+                  <text x="168" y="115" fill="#FFF7ED" font-size="11" font-weight="bold" text-anchor="middle">WEST ZONE</text>
+                  <text x="168" y="130" fill="#FDBA74" font-size="9" text-anchor="middle">Navrangpura</text>
+                  <circle cx="168" cy="152" r="13" fill="#EA580C" stroke="#FFEDD5" stroke-width="2" />
+                  <text id="mapCount_West" x="168" y="156" fill="#FFF" font-size="11" font-weight="bold" text-anchor="middle">2</text>
+                </g>
+
+                <!-- 3. NORTH ZONE (Sabarmati / Naroda) -->
+                <g class="gis-zone" onclick="filterOfficerQueueByZone('North Zone')">
+                  <polygon points="215,30 355,25 340,105 212,105" fill="#115E59" stroke="#2DD4BF" stroke-width="1.8" fill-opacity="0.75" />
+                  <text x="280" y="62" fill="#F0FDFA" font-size="11" font-weight="bold" text-anchor="middle">NORTH ZONE</text>
+                  <text x="280" y="76" fill="#99F6E4" font-size="9" text-anchor="middle">Sabarmati • Naroda</text>
+                  <circle cx="280" cy="91" r="10" fill="#0D9488" stroke="#CCFBF1" stroke-width="1.5" />
+                  <text id="mapCount_North" x="280" y="95" fill="#FFF" font-size="10" font-weight="bold" text-anchor="middle">0</text>
+                </g>
+
+                <!-- 4. CENTRAL ZONE (Dariapur / Kalupur Heritage Walled City) -->
+                <g class="gis-zone" onclick="filterOfficerQueueByZone('Central Zone')">
+                  <polygon points="212,105 295,105 290,185 208,185" fill="#78350F" stroke="#FBBF24" stroke-width="1.8" fill-opacity="0.8" />
+                  <text x="252" y="138" fill="#FEF3C7" font-size="10" font-weight="bold" text-anchor="middle">CENTRAL</text>
+                  <text x="252" y="151" fill="#FDE68A" font-size="8.5" text-anchor="middle">Dariapur • Walled City</text>
+                  <circle cx="252" cy="168" r="10" fill="#D97706" stroke="#FEF3C7" stroke-width="1.5" />
+                  <text id="mapCount_Central" x="252" y="172" fill="#FFF" font-size="10" font-weight="bold" text-anchor="middle">1</text>
+                </g>
+
+                <!-- 5. EAST ZONE (Nikol / Odhav / Bapunagar) -->
+                <g class="gis-zone" onclick="filterOfficerQueueByZone('East Zone')">
+                  <polygon points="295,105 340,105 395,120 390,225 290,185" fill="#3730A3" stroke="#818CF8" stroke-width="1.8" fill-opacity="0.75" />
+                  <text x="345" y="150" fill="#E0E7FF" font-size="11" font-weight="bold" text-anchor="middle">EAST ZONE</text>
+                  <text x="345" y="164" fill="#A5B4FC" font-size="9" text-anchor="middle">Nikol • Odhav</text>
+                  <circle cx="345" cy="182" r="10" fill="#4F46E5" stroke="#E0E7FF" stroke-width="1.5" />
+                  <text id="mapCount_East" x="345" y="186" fill="#FFF" font-size="10" font-weight="bold" text-anchor="middle">0</text>
+                </g>
+
+                <!-- 6. SOUTH ZONE (Maninagar / Kankaria / Vatva) -->
+                <g class="gis-zone" onclick="filterOfficerQueueByZone('South Zone')">
+                  <polygon points="205,235 208,185 290,185 390,225 360,290 195,290" fill="#065F46" stroke="#34D399" stroke-width="1.8" fill-opacity="0.8" />
+                  <text x="285" y="235" fill="#ECFDF5" font-size="11" font-weight="bold" text-anchor="middle">SOUTH ZONE</text>
+                  <text x="285" y="249" fill="#6EE7B7" font-size="9" text-anchor="middle">Maninagar • Kankaria</text>
+                  <circle cx="285" cy="268" r="11" fill="#059669" stroke="#D1FAE5" stroke-width="1.5" />
+                  <text id="mapCount_South" x="285" y="272" fill="#FFF" font-size="10" font-weight="bold" text-anchor="middle">0</text>
+                </g>
+
+                <!-- Sabarmati River Course Dividing East & West Ahmedabad -->
+                <path d="M 218,15 C 212,90 214,150 206,295" fill="none" stroke="#38BDF8" stroke-width="5" stroke-linecap="round" stroke-opacity="0.85" />
+                <text x="222" y="285" fill="#38BDF8" font-size="8.5" font-family="monospace" font-weight="bold">SABARMATI RIVERFRONT</text>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Zone Legend -->
+          <div class="grid grid-cols-3 gap-2 text-[11px] bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+            <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-orange-600"></span>West (Navrangpura)</div>
+            <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-600"></span>Central (Dariapur)</div>
+            <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-600"></span>South (Maninagar)</div>
+          </div>
+        </div>
+
+        <!-- RIGHT 7 COLS: LIVE DEPARTMENTAL ACTION & SLA ESCALATION QUEUE -->
+        <div class="lg:col-span-7 bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between">
+          <div>
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 class="text-base font-bold text-slate-900">Departmental SLA Action & Approval Queue</h3>
+                  <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800">LIVE BIDIRECTIONAL SYNC</span>
+                </div>
+                <p class="text-xs text-slate-500">Click <strong>"Advance Stage"</strong> or <strong>"Approve & Issue Certificate"</strong> to update the Citizen Portal in real time</p>
+              </div>
+            </div>
+
+            <!-- Action Queue Cards -->
+            <div id="officerQueueContainer" class="space-y-3.5 max-h-[540px] overflow-y-auto pr-1">
+              <!-- Populated dynamically by renderOfficerQueue() -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- BOTTOM COLLAPSIBLE PLAYWRIGHT RPA LEGACY BRIDGE TERMINAL CONSOLE       -->
+  <!-- ===================================================================== -->
+  <div id="rpaConsoleDrawer" class="fixed bottom-0 left-0 right-0 z-40 bg-slate-950 text-slate-200 border-t-2 border-orange-500 shadow-2xl transition-transform duration-300 translate-y-full">
+    <div class="max-w-[1600px] mx-auto px-4 py-2.5 flex items-center justify-between border-b border-slate-800">
+      <div class="flex items-center gap-2.5">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span class="font-mono text-xs sm:text-sm font-bold text-white">
+          <i class="fa-solid fa-robot text-orange-400 mr-1.5"></i>HYBRID CONNECTOR MESH — Headless Playwright RPA Legacy Bridge
+        </span>
+        <span class="hidden sm:inline-block text-[11px] font-mono px-2 py-0.5 rounded bg-slate-800 text-sky-300">
+          Bridging Non-API AMC Portals (e-Nagar / Gumasta / Birth-Death Legacy DB)
+        </span>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="runManualRPASyncTest()" class="px-2.5 py-1 rounded bg-emerald-600 hover:bg-emerald-500 text-white font-mono text-xs font-semibold transition">
+          <i class="fa-solid fa-play mr-1"></i>Run Test RPA Job
+        </button>
+        <button onclick="toggleRPADrawer()" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs">
+          <i class="fa-solid fa-chevron-down mr-1"></i>Minimize
+        </button>
+      </div>
+    </div>
+    <div id="rpaTerminalLogs" class="max-w-[1600px] mx-auto p-3.5 h-44 overflow-y-auto font-mono text-xs space-y-1.5 bg-black/50">
+      <!-- Populated dynamically via logRPAEvent() -->
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 1: 1-CLICK LINK AMC ASSET WIZARD                                -->
+  <!-- ===================================================================== -->
+  <div id="linkAssetModal" class="fixed inset-0 z-50 hidden bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+        <div class="flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-100 text-orange-600 flex items-center justify-center font-bold"><i class="fa-solid fa-link"></i></span>
+          <h3 class="text-base font-bold text-slate-900">1-Click Link Legacy AMC Asset</h3>
+        </div>
+        <button onclick="closeLinkAssetModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <div class="py-4 space-y-3 text-xs">
+        <p class="text-slate-600">Bind any existing Ahmedabad Municipal Corporation identifier to your single <code class="font-mono font-bold text-slate-900">AMC-ID (AMC-2026-8941)</code> profile.</p>
+
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Select AMC Department / Asset Type</label>
+          <select id="newAssetTypeSelect" class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 font-medium text-slate-800">
+            <option value="Prof. Tax #PT-GJ01-9920">Professional Tax Account (#PT-GJ01-9920)</option>
+            <option value="Tenement #0104-88-4410-T">Second Property Tenement (#0104-88-4410-T)</option>
+            <option value="Trade License #TRD-2026-118">Food & Drug Trade Permit (#TRD-2026-118)</option>
+            <option value="EV Subsidy ID #AMC-EV-701">AMC Green EV Subsidy ID (#AMC-EV-701)</option>
+          </select>
+        </div>
+
+        <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900">
+          <div class="font-bold"><i class="fa-solid fa-bolt text-emerald-600 mr-1"></i>Aadhaar e-KYC Name Match Found</div>
+          <p class="text-[11px] mt-0.5">Record owner <strong>"Rajeshbhai K. Patel"</strong> matches your tokenized `AMC-ID` profile.</p>
+        </div>
+      </div>
+
+      <div class="flex justify-end gap-2 pt-2">
+        <button onclick="closeLinkAssetModal()" class="px-4 py-2 rounded-xl border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50">Cancel</button>
+        <button onclick="confirmLinkNewAsset()" class="px-4 py-2 rounded-xl bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold shadow">Bind Asset to AMC-ID</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 2: UNIFIED UPI QR / BILLDESK GOV PAYMENT CHECKOUT               -->
+  <!-- ===================================================================== -->
+  <div id="unifiedPaymentModal" class="fixed inset-0 z-50 hidden bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+        <div class="flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold"><i class="fa-solid fa-indian-rupee-sign"></i></span>
+          <div>
+            <h3 class="text-base font-bold text-slate-900">AMC Unified GovTech Checkout</h3>
+            <p class="text-[11px] text-slate-500">Single Settlement across Property Tax & Water Utility</p>
+          </div>
+        </div>
+        <button onclick="closeUnifiedPaymentModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <div class="py-4 space-y-3 text-xs">
+        <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-2">
+          <div class="flex justify-between">
+            <span class="text-slate-600">Property Tax (`#0104-22-0891-0001-T`):</span>
+            <span class="font-mono font-bold text-slate-900">₹4,850.00</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-600">Water & Sewerage (`#WTR-88310`):</span>
+            <span class="font-mono font-bold text-slate-900">₹620.00</span>
+          </div>
+          <div class="flex justify-between text-emerald-700">
+            <span>10% Early-Bird Rebate Applied:</span>
+            <span class="font-mono font-bold">Included in Tax Credit</span>
+          </div>
+          <div class="border-t border-slate-200 pt-2 flex justify-between text-sm font-extrabold text-slate-900">
+            <span>Total Consolidated Payable:</span>
+            <span class="font-mono text-emerald-600">₹5,470.00</span>
+          </div>
+        </div>
+
+        <!-- Simulated UPI QR Code -->
+        <div class="flex flex-col items-center justify-center p-4 rounded-xl border border-dashed border-slate-300 bg-slate-50/50">
+          <div class="w-32 h-32 bg-white p-2 rounded-xl border border-slate-200 shadow-sm flex items-center justify-center">
+            <svg viewBox="0 0 100 100" class="w-full h-full text-slate-900">
+              <rect x="8" y="8" width="26" height="26" fill="none" stroke="currentColor" stroke-width="6"/>
+              <rect x="16" y="16" width="10" height="10" fill="currentColor"/>
+              <rect x="66" y="8" width="26" height="26" fill="none" stroke="currentColor" stroke-width="6"/>
+              <rect x="74" y="16" width="10" height="10" fill="currentColor"/>
+              <rect x="8" y="66" width="26" height="26" fill="none" stroke="currentColor" stroke-width="6"/>
+              <rect x="16" y="74" width="10" height="10" fill="currentColor"/>
+              <rect x="42" y="12" width="6" height="18" fill="currentColor"/>
+              <rect x="52" y="22" width="6" height="14" fill="currentColor"/>
+              <rect x="40" y="42" width="20" height="20" fill="#EA580C"/>
+              <rect x="12" y="42" width="18" height="6" fill="currentColor"/>
+              <rect x="68" y="44" width="22" height="6" fill="currentColor"/>
+              <rect x="42" y="68" width="16" height="8" fill="currentColor"/>
+              <rect x="66" y="66" width="12" height="24" fill="currentColor"/>
+              <rect x="82" y="76" width="10" height="14" fill="currentColor"/>
+            </svg>
+          </div>
+          <span class="font-mono text-[11px] text-slate-600 mt-2">VPA: <strong>amc.onegrid@sbi</strong> • BillDesk Gov Sandbox</span>
+        </div>
+      </div>
+
+      <div class="flex justify-end gap-2">
+        <button onclick="closeUnifiedPaymentModal()" class="px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold text-slate-600">Cancel</button>
+        <button onclick="confirmUnifiedPayment()" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow flex items-center gap-2">
+          <i class="fa-solid fa-bolt"></i> Simulate Instant UPI Payment (₹5,470)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 3: CERTIFICATE / THERMAL RECEIPT PREVIEW MODAL                  -->
+  <!-- ===================================================================== -->
+  <div id="documentPreviewModal" class="fixed inset-0 z-50 hidden bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+        <h3 id="docModalTitle" class="text-base font-bold text-slate-900">Official AMC Digital Certificate</h3>
+        <button onclick="closeDocumentModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+      <div id="docModalBody" class="my-4">
+        <!-- Populated dynamically -->
+      </div>
+      <div class="flex justify-between items-center pt-2 border-t border-slate-200">
+        <span class="text-[11px] font-mono text-emerald-700"><i class="fa-solid fa-shield-check mr-1"></i>DigiLocker & e-Sign Verified</span>
+        <div class="flex gap-2">
+          <button onclick="window.print()" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold flex items-center gap-1.5">
+            <i class="fa-solid fa-print"></i> Print / Save PDF
+          </button>
+          <button onclick="closeDocumentModal()" class="px-4 py-2 rounded-xl border border-slate-200 text-xs font-semibold text-slate-700">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- APPLICATION LOGIC & REACTIVE STATE ENGINE                             -->
+  <!-- ===================================================================== -->
+  <script>
+    // -----------------------------------------------------------------------
+    // 1. CENTRALIZED REACTIVE STATE (Synced across Citizen, Kiosk & Officer)
+    // -----------------------------------------------------------------------
+    const STAGE_LABELS = [
+      '1. Submitted',
+      '2. AI OCR & Pre-Verified',
+      '3. Routed to Ward',
+      '4. Officer Action',
+      '5. Resolved / Issued'
+    ];
+
+    let appState = {};
+
+    function getInitialState() {
+      return {
+        currentView: 'CITIZEN', // 'CITIZEN' | 'KIOSK' | 'OFFICER'
+        splitScreenMode: false,
+        splitRightPane: 'OFFICER', // 'OFFICER' | 'KIOSK'
+        selectedZoneFilter: 'ALL',
+        selectedVisionScenario: 'POTHOLE',
+        simulateDuplicate30m: false,
+        selectedKioskService: 'SENIOR_CITIZEN',
+        kioskSession: {
+          unlocked: false,
+          citizenMobile: '98250 12345',
+          remainingSeconds: 900, // 15:00
+          ocrPassed: true
+        },
+        linkedAssets: [
+          { label: 'Property Tenement', code: '#0104-22-0891-0001-T', icon: 'fa-house-chimney' },
+          { label: 'Water Connection', code: '#WTR-88310', icon: 'fa-droplet' },
+          { label: 'Vehicle', code: 'GJ-01-WK-4092', icon: 'fa-car' },
+          { label: 'Shop License', code: '#GUM-2021-441', icon: 'fa-shop' }
+        ],
+        bills: [
+          {
+            id: 'BILL-PROP',
+            title: 'Property Tax (2026-27)',
+            account: 'Tenement #0104-22-0891-0001-T',
+            ward: 'Navrangpura (West Zone)',
+            amount: 4850,
+            badge: '10% Early-Bird Rebate ends in 4 days',
+            status: 'DUE',
+            icon: 'fa-building-shield',
+            color: 'orange'
+          },
+          {
+            id: 'BILL-WATER',
+            title: 'Water & Sewerage Bill',
+            account: 'Connection #WTR-88310',
+            ward: 'Navrangpura (West Zone)',
+            amount: 620,
+            badge: 'Metered Civic Supply',
+            status: 'DUE',
+            icon: 'fa-faucet-drip',
+            color: 'sky'
+          },
+          {
+            id: 'BILL-CHALLAN',
+            title: 'AMC Parking / E-Challan',
+            account: 'Vehicle GJ-01-WK-4092',
+            ward: 'City-Wide ANPR Sync',
+            amount: 0,
+            badge: 'Zero Pending Violations',
+            status: 'PAID',
+            icon: 'fa-car-side',
+            color: 'emerald'
+          }
+        ],
+        requests: [
+          {
+            id: 'AMC-REQ-88412',
+            title: 'Shop Gumasta License Renewal (#GUM-2021-441)',
+            category: 'PERMIT',
+            department: 'Shops & Establishment Dept',
+            zone: 'West Zone',
+            ward: 'Navrangpura',
+            stageIndex: 2, // 0 to 4 (2 = '3. Routed to Ward')
+            slaText: '18h 42m remaining before Auto-Escalation to Deputy Commissioner',
+            slaBreached: false,
+            escalatedTo: null,
+            connector: 'Playwright RPA Bridge',
+            upvotes: 1,
+            latLng: '23.0301° N, 72.5615° E'
+          },
+          {
+            id: 'AMC-GRV-90214',
+            title: 'Law Garden Road Pothole Repair (High Severity)',
+            category: 'GRIEVANCE',
+            department: 'Road & Building Dept',
+            zone: 'West Zone',
+            ward: 'Navrangpura',
+            stageIndex: 3, // '4. Officer Action'
+            slaText: '06h 15m remaining before Auto-Escalation to Deputy Commissioner',
+            slaBreached: false,
+            escalatedTo: null,
+            connector: 'YOLOv8 + PostGIS Router',
+            upvotes: 4,
+            latLng: '23.0268° N, 72.5610° E'
+          },
+          {
+            id: 'AMC-CRT-77109',
+            title: 'Birth Certificate Digital Copy (Aarav R. Patel)',
+            category: 'CERTIFICATE',
+            department: 'Registrar of Births & Deaths',
+            zone: 'Central Zone',
+            ward: 'Dariapur',
+            stageIndex: 1, // '2. AI OCR & Pre-Verified'
+            slaText: '29h 10m remaining before Auto-Escalation to Deputy Commissioner',
+            slaBreached: false,
+            escalatedTo: null,
+            connector: 'Legacy e-Nagar RPA Bot',
+            upvotes: 1,
+            latLng: '23.0352° N, 72.5890° E'
+          }
+        ],
+        certificates: [
+          {
+            id: 'CERT-BIRTH-01',
+            title: 'Birth Certificate',
+            subtitle: 'Aarav Rajeshbhai Patel • Reg #AMC-BD-2018-4412',
+            issuedDate: '12 Aug 2018',
+            issuer: 'AMC Health & Birth Dept',
+            verified: true
+          },
+          {
+            id: 'CERT-MARRIAGE-02',
+            title: 'Marriage Registration Certificate',
+            subtitle: 'Rajeshbhai & Meenaben Patel • #AMC-MR-2014-0918',
+            issuedDate: '24 Nov 2014',
+            issuer: 'AMC Central Registrar',
+            verified: true
+          },
+          {
+            id: 'CERT-NODUES-03',
+            title: 'Property Tax Assessment Extract',
+            subtitle: 'Tenement #0104-22-0891-0001-T (Navrangpura)',
+            issuedDate: '01 Apr 2026',
+            issuer: 'AMC Revenue & Tax Dept',
+            verified: true
+          }
+        ],
+        revenueToday: 1482400,
+        rpaLogs: [
+          '[17:12:01] [Playwright Worker #1] Connected to AMC Legacy e-Nagar Portal (https://enagar-legacy.amc.gov.in)',
+          '[17:12:04] [Kong Gateway] Federated SSO Token issued for AMC-ID: AMC-2026-8941 (Aadhaar SHA-256 verified)',
+          '[17:13:19] [Playwright Worker #2] Scraped Property Tax ledger for Tenement #0104-22-0891-0001-T → ₹4,850 due',
+          '[17:14:02] [PostGIS Spatial Router] Indexed 6 AMC Municipal Zones & 48 Ward GeoJSON boundaries',
+          '[17:15:10] [Playwright Worker #2] Ticket #AMC-REQ-88412 (Gumasta License) auto-filled into legacy portal • Ack #GUM-ACK-991',
+          '[17:15:45] [Temporal SLA Engine] Monitoring 3 active requests for statutory SLA compliance'
+        ]
+      };
+    }
+
+    // -----------------------------------------------------------------------
+    // 2. INITIALIZATION & RENDER PIPELINE
+    // -----------------------------------------------------------------------
+    let kioskInterval = null;
+
+    window.onload = function () {
+      appState = getInitialState();
+      renderAllViews();
+      initAIChatGreeting();
+      updateVisionPreviewUI();
+      startKioskCountdownTimer();
+    };
+
+    function renderAllViews() {
+      renderLinkedAssets();
+      renderCitizenBills();
+      renderPizzaTrackers();
+      renderCertificateWallet();
+      renderOfficerQueue();
+      renderRPATerminal();
+      updateMapZoneCounts();
+    }
+
+    function resetFullDemoState() {
+      appState = getInitialState();
+      renderAllViews();
+      initAIChatGreeting();
+      updateVisionPreviewUI();
+      showSimulatedToast(
+        'SYSTEM',
+        'Demo State Restored',
+        'All Citizen, Jan Seva Kiosk, and AMC Officer Command Center views reset to clean Ahmedabad defaults.'
+      );
+    }
+
+    // -----------------------------------------------------------------------
+    // 3. VIEW SWITCHER & 50/50 SPLIT-SCREEN JUDGE DEMO MODE
+    // -----------------------------------------------------------------------
+    function switchViewMode(mode) {
+      appState.currentView = mode;
+      if (appState.splitScreenMode) {
+        // If user clicks Kiosk or Officer while in Split mode, show that on the right pane
+        if (mode === 'KIOSK' || mode === 'OFFICER') {
+          setSplitRightPane(mode);
+          return;
+        }
+      }
+      applyViewportLayout();
+    }
+
+    function toggleSplitScreenJudgeMode() {
+      appState.splitScreenMode = !appState.splitScreenMode;
+      applyViewportLayout();
+      if (appState.splitScreenMode) {
+        showSimulatedToast(
+          'WHATSAPP',
+          '⚡ Split-Screen Judge Mode Active',
+          'Left: Citizen Portal | Right: AMC Officer / Kiosk. Click "Approve" or "Advance Stage" on the right to see instant sync on the left!'
+        );
+      }
+    }
+
+    function setSplitRightPane(pane) {
+      appState.splitRightPane = pane;
+      const offBtn = document.getElementById('splitRightOfficerBtn');
+      const kskBtn = document.getElementById('splitRightKioskBtn');
+      if (pane === 'OFFICER') {
+        offBtn.className = 'px-2.5 py-1 rounded bg-white text-slate-900 font-bold text-xs shadow';
+        kskBtn.className = 'px-2.5 py-1 rounded bg-black/25 hover:bg-black/40 text-white font-semibold text-xs';
+      } else {
+        kskBtn.className = 'px-2.5 py-1 rounded bg-white text-slate-900 font-bold text-xs shadow';
+        offBtn.className = 'px-2.5 py-1 rounded bg-black/25 hover:bg-black/40 text-white font-semibold text-xs';
+      }
+      applyViewportLayout();
+    }
+
+    function applyViewportLayout() {
+      const mainGrid = document.getElementById('mainWorkspaceGrid');
+      const viewCit = document.getElementById('viewCitizen');
+      const viewKsk = document.getElementById('viewKiosk');
+      const viewOff = document.getElementById('viewOfficer');
+      const splitBanner = document.getElementById('splitScreenBanner');
+      const splitBtn = document.getElementById('splitModeBtn');
+      const splitBtnText = document.getElementById('splitModeBtnText');
+
+      // Update Tab Buttons
+      const tabs = {
+        CITIZEN: document.getElementById('tabBtnCitizen'),
+        KIOSK: document.getElementById('tabBtnKiosk'),
+        OFFICER: document.getElementById('tabBtnOfficer')
+      };
+      Object.keys(tabs).forEach(k => {
+        if (k === appState.currentView && !appState.splitScreenMode) {
+          tabs[k].className = 'px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition flex items-center gap-2 bg-orange-600 text-white shadow';
+        } else {
+          tabs[k].className = 'px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-700/60';
+        }
+      });
+
+      if (appState.splitScreenMode) {
+        splitBanner.classList.remove('hidden');
+        splitBtn.className = 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold border border-emerald-400 bg-emerald-600 text-white transition flex items-center gap-2 shadow-lg';
+        splitBtnText.textContent = '⚡ Split-Screen Judge Mode: ON (50/50)';
+        mainGrid.className = 'flex-1 max-w-[1600px] w-full mx-auto px-3 sm:px-6 py-5 grid grid-cols-1 xl:grid-cols-2 gap-6 pb-24 items-start';
+
+        viewCit.classList.remove('hidden');
+        if (appState.splitRightPane === 'OFFICER') {
+          viewOff.classList.remove('hidden');
+          viewKsk.classList.add('hidden');
+        } else {
+          viewKsk.classList.remove('hidden');
+          viewOff.classList.add('hidden');
+        }
+      } else {
+        splitBanner.classList.add('hidden');
+        splitBtn.className = 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold border border-amber-400/50 bg-gradient-to-r from-amber-500/20 to-orange-500/20 hover:from-amber-500/30 hover:to-orange-500/30 text-amber-300 transition flex items-center gap-2 shadow-sm';
+        splitBtnText.textContent = '⚡ Split-Screen Judge Mode: OFF';
+        mainGrid.className = 'flex-1 max-w-[1600px] w-full mx-auto px-3 sm:px-6 py-5 grid grid-cols-1 gap-6 pb-24';
+
+        viewCit.classList.toggle('hidden', appState.currentView !== 'CITIZEN');
+        viewKsk.classList.toggle('hidden', appState.currentView !== 'KIOSK');
+        viewOff.classList.toggle('hidden', appState.currentView !== 'OFFICER');
+      }
+    }
+
+    // -----------------------------------------------------------------------
+    // 4. SIMULATED SMS & WHATSAPP TOAST NOTIFICATION SYSTEM
+    // -----------------------------------------------------------------------
+    function showSimulatedToast(channel, title, message, actionHtml = '') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+
+      const isWA = channel === 'WHATSAPP';
+      const isSMS = channel === 'SMS';
+
+      const badgeColor = isWA
+        ? 'bg-emerald-600 text-white'
+        : isSMS
+        ? 'bg-indigo-600 text-white'
+        : 'bg-orange-600 text-white';
+
+      const iconClass = isWA
+        ? 'fa-brands fa-whatsapp'
+        : isSMS
+        ? 'fa-solid fa-comment-sms'
+        : 'fa-solid fa-bell';
+
+      const headerLabel = isWA
+        ? 'WhatsApp Business • AMC One Official ✓'
+        : isSMS
+        ? 'SMS Gateway • AX-AMCGOV'
+        : 'AMC-One Grid System Alert';
+
+      toast.className = 'pointer-events-auto bg-slate-900/95 backdrop-blur-md text-white p-3.5 rounded-2xl shadow-2xl border border-slate-700 transition-all duration-300 flex flex-col gap-1.5';
+      toast.innerHTML = `
+        <div class="flex items-center justify-between gap-2">
+          <span class="px-2 py-0.5 rounded-full text-[10px] font-bold flex items-center gap-1 ${badgeColor}">
+            <i class="${iconClass}"></i> ${headerLabel}
+          </span>
+          <button onclick="this.closest('.pointer-events-auto').remove()" class="text-slate-400 hover:text-white text-xs">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="text-xs font-bold text-white mt-0.5">${title}</div>
+        <div class="text-[11px] text-slate-300 leading-relaxed">${message}</div>
+        ${actionHtml}
+      `;
+
+      container.prepend(toast);
+      setTimeout(() => {
+        if (toast && toast.parentNode) {
+          toast.style.opacity = '0';
+          setTimeout(() => toast.remove(), 300);
+        }
+      }, 8500);
+    }
+
+    // -----------------------------------------------------------------------
+    // 5. CITIZEN PORTAL: LINKED ASSETS & 1-CLICK CHECKOUT
+    // -----------------------------------------------------------------------
+    function renderLinkedAssets() {
+      const container = document.getElementById('linkedAssetsList');
+      const pillsHtml = appState.linkedAssets.map(a => `
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-800/90 border border-slate-700 text-xs text-slate-200 font-mono">
+          <i class="fa-solid ${a.icon} text-orange-400 text-[11px]"></i>
+          <span class="font-sans text-slate-400">${a.label}:</span>
+          <strong class="text-white">${a.code}</strong>
+        </span>
+      `).join('');
+
+      container.innerHTML = `
+        <span class="text-[11px] uppercase tracking-wider font-semibold text-slate-400 mr-1">Federated SSO Linked IDs:</span>
+        ${pillsHtml}
+      `;
+    }
+
+    function openLinkAssetModal() {
+      document.getElementById('linkAssetModal').classList.remove('hidden');
+    }
+
+    function closeLinkAssetModal() {
+      document.getElementById('linkAssetModal').classList.add('hidden');
+    }
+
+    function confirmLinkNewAsset() {
+      const select = document.getElementById('newAssetTypeSelect');
+      const val = select.value;
+      const parts = val.split(' #');
+      appState.linkedAssets.push({
+        label: parts[0],
+        code: '#' + parts[1],
+        icon: 'fa-file-Signature'
+      });
+      renderLinkedAssets();
+      closeLinkAssetModal();
+      logRPAEvent(`[Keycloak Identity Broker] Bound legacy record ${val} to AMC-ID AMC-2026-8941`);
+      showSimulatedToast(
+        'WHATSAPP',
+        'New Municipal Asset Linked to AMC-ID',
+        `Your ${val} is now permanently bound to your Single Sign-On profile.`
+      );
+    }
+
+    function renderCitizenBills() {
+      const grid = document.getElementById('citizenBillsGrid');
+      const totalDue = appState.bills
+        .filter(b => b.status === 'DUE')
+        .reduce((acc, b) => acc + b.amount, 0);
+
+      const payBtn = document.getElementById('payAllDuesBtn');
+      const payBtnLabel = document.getElementById('payAllDuesBtnLabel');
+
+      if (totalDue === 0) {
+        payBtn.disabled = true;
+        payBtn.className = 'px-4 py-2.5 rounded-xl bg-emerald-100 text-emerald-800 font-bold text-xs sm:text-sm border border-emerald-300 flex items-center gap-2 cursor-default';
+        payBtnLabel.innerHTML = '<i class="fa-solid fa-circle-check mr-1"></i>All Municipal Dues Paid (₹0 Pending)';
+      } else {
+        payBtn.disabled = false;
+        payBtn.className = 'px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-2';
+        payBtnLabel.textContent = `Pay All Dues (₹${totalDue.toLocaleString('en-IN')})`;
+      }
+
+      grid.innerHTML = appState.bills.map(bill => {
+        const isPaid = bill.status === 'PAID';
+        return `
+          <div class="rounded-xl p-4 border ${isPaid ? 'bg-slate-50/70 border-slate-200' : 'bg-white border-slate-200 shadow-sm'} flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                  <i class="fa-solid ${bill.icon} ${isPaid ? 'text-emerald-600' : 'text-orange-600'}"></i>
+                  ${bill.title}
+                </span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${isPaid ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-700'}">
+                  ${isPaid ? 'PAID ✓' : 'DUE'}
+                </span>
+              </div>
+              <div class="text-[11px] font-mono text-slate-500">${bill.account}</div>
+              <div class="text-2xl font-extrabold text-slate-900 my-2 font-mono">
+                ₹${isPaid ? '0' : bill.amount.toLocaleString('en-IN')}
+                ${isPaid && bill.amount > 0 ? `<span class="text-xs font-normal text-slate-400 line-through ml-1">₹${bill.amount.toLocaleString('en-IN')}</span>` : ''}
+              </div>
+            </div>
+            <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
+              <span class="${bill.id === 'BILL-PROP' && !isPaid ? 'text-orange-700 font-semibold' : 'text-slate-500'}">${bill.badge}</span>
+              ${!isPaid ? `<button onclick="openUnifiedPaymentModal()" class="text-emerald-700 font-bold hover:underline">Pay →</button>` : `<span class="text-emerald-600 font-mono font-semibold">No Dues</span>`}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function openUnifiedPaymentModal() {
+      const totalDue = appState.bills.filter(b => b.status === 'DUE').reduce((s, b) => s + b.amount, 0);
+      if (totalDue === 0) return;
+      document.getElementById('unifiedPaymentModal').classList.remove('hidden');
+    }
+
+    function closeUnifiedPaymentModal() {
+      document.getElementById('unifiedPaymentModal').classList.add('hidden');
+    }
+
+    function confirmUnifiedPayment() {
+      const totalPaid = appState.bills.filter(b => b.status === 'DUE').reduce((s, b) => s + b.amount, 0);
+      appState.bills.forEach(b => { b.status = 'PAID'; });
+      appState.revenueToday += totalPaid;
+
+      // Add consolidated tax receipt to Certificate Wallet if not already added
+      const receiptId = 'CERT-TAX-PAID-' + Math.floor(1000 + Math.random() * 9000);
+      appState.certificates.unshift({
+        id: receiptId,
+        title: 'Consolidated Tax & Utility e-Receipt',
+        subtitle: `Paid ₹${totalPaid.toLocaleString('en-IN')} • UPI Ref #62881904412`,
+        issuedDate: '14 Oct 2026 (Just Now)',
+        issuer: 'AMC Central Revenue Gateway',
+        verified: true
+      });
+
+      closeUnifiedPaymentModal();
+      renderAllViews();
+      logRPAEvent(`[BillDesk Gov Gateway] Settled ₹${totalPaid} for AMC-ID AMC-2026-8941 • Cryptographic Receipt #${receiptId} pushed to Citizen Wallet`);
+      showSimulatedToast(
+        'WHATSAPP',
+        `Payment of ₹${totalPaid.toLocaleString('en-IN')} Successful ✓`,
+        `Property Tax (#0104-22-0891-0001-T) & Water Bill (#WTR-88310) marked PAID. Receipt added to your AMC Certificate Wallet.`
+      );
+    }
+
+    // -----------------------------------------------------------------------
+    // 6. LIVE "PIZZA-STYLE" SERVICE & GRIEVANCE TRACKER
+    // -----------------------------------------------------------------------
+    function renderPizzaTrackers() {
+      const container = document.getElementById('pizzaTrackerContainer');
+      document.getElementById('citizenActiveTrackerCount').textContent = appState.requests.length;
+
+      container.innerHTML = appState.requests.map(req => {
+        const isResolved = req.stageIndex === 4;
+        const stepsHtml = STAGE_LABELS.map((label, idx) => {
+          const done = idx <= req.stageIndex;
+          const current = idx === req.stageIndex;
+          return `
+            <div class="flex-1 flex flex-col items-center relative">
+              <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold z-10 transition-all ${
+                done
+                  ? 'bg-emerald-600 text-white shadow-sm shadow-emerald-600/30'
+                  : 'bg-slate-200 text-slate-500'
+              } ${current && !isResolved ? 'ring-4 ring-orange-400/40 bg-orange-600' : ''}">
+                ${done ? '<i class="fa-solid fa-check text-[10px]"></i>' : idx + 1}
+              </div>
+              <span class="text-[10px] sm:text-[11px] font-semibold mt-1.5 text-center ${
+                current ? 'text-slate-900 font-bold' : done ? 'text-emerald-700' : 'text-slate-400'
+              }">${label}</span>
+            </div>
+          `;
+        }).join('');
+
+        return `
+          <div class="rounded-2xl p-4 border transition-all ${
+            req.slaBreached
+              ? 'bg-red-50/60 border-red-300 shadow-sm'
+              : isResolved
+              ? 'bg-emerald-50/40 border-emerald-200'
+              : 'bg-slate-50/70 border-slate-200'
+          }">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="font-mono text-xs font-bold px-2 py-0.5 rounded bg-slate-900 text-white">${req.id}</span>
+                <h4 class="text-sm font-bold text-slate-900">${req.title}</h4>
+                <span class="text-[11px] px-2 py-0.5 rounded-full bg-slate-200 text-slate-700 font-medium">${req.department} • ${req.ward} (${req.zone})</span>
+                ${req.upvotes > 1 ? `<span class="text-[11px] px-2 py-0.5 rounded-full bg-orange-100 text-orange-800 font-bold"><i class="fa-solid fa-users mr-1"></i>${req.upvotes} Citizens Merged</span>` : ''}
+              </div>
+
+              <!-- SLA Timer Badge -->
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-1 rounded-lg text-[11px] font-mono font-semibold ${
+                  req.slaBreached
+                    ? 'bg-red-600 text-white animate-pulse'
+                    : isResolved
+                    ? 'bg-emerald-100 text-emerald-800'
+                    : 'bg-amber-100 text-amber-900 border border-amber-300'
+                }">
+                  <i class="fa-solid ${req.slaBreached ? 'fa-Bell-exclamation' : isResolved ? 'fa-circle-check' : 'fa-hourglass-half'} mr-1"></i>
+                  ${isResolved ? 'SLA MET • COMPLETED' : req.slaText}
+                </span>
+              </div>
+            </div>
+
+            ${req.slaBreached ? `
+              <div class="mb-3 px-3 py-2 rounded-xl bg-red-100 border border-red-300 text-red-900 text-xs flex items-center justify-between">
+                <span><i class="fa-solid fa-gavel mr-1.5"></i><strong>AUTO-ESCALATED:</strong> Assigned to <strong>${req.escalatedTo}</strong> under Gujarat Public Services SLA Act.</span>
+                <span class="font-mono text-[10px] font-bold uppercase">Priority #1</span>
+              </div>
+            ` : ''}
+
+            <!-- 5-Stage Pizza Stepper -->
+            <div class="grid grid-cols-5 gap-1 pt-2 pb-1 relative">
+              ${stepsHtml}
+            </div>
+
+            <div class="mt-3 pt-2.5 border-t border-slate-200/70 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500">
+              <span><i class="fa-solid fa-plug-circle-bolt text-indigo-600 mr-1"></i>Connector: <strong class="font-mono text-slate-700">${req.connector}</strong> &nbsp;|&nbsp; GPS: <code class="font-mono">${req.latLng}</code></span>
+              ${isResolved ? `
+                <button onclick="previewIssuedDocument('${req.id}', '${req.title}')" class="px-3 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-sm transition">
+                  <i class="fa-solid fa-download mr-1"></i>View Issued Certificate / Resolution
+                </button>
+              ` : `
+                <span class="text-slate-500">Synced with AMC Officer Queue</span>
+              `}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // -----------------------------------------------------------------------
+    // 7. AI VISION AUTO-TRIAGE GRIEVANCE REPORTER (3-Layer Verification)
+    // -----------------------------------------------------------------------
+    const VISION_SCENARIOS = {
+      POTHOLE: {
+        title: 'Law Garden Road Pothole Repair',
+        latLng: '23.0268° N, 72.5610° E',
+        ward: 'Navrangpura',
+        zone: 'West Zone',
+        dept: 'Road & Building Dept',
+        yoloLabel: '96.8% Road Pothole — High Severity',
+        boxTitle: 'POTHOLE [0.97]',
+        color: '#EF4444'
+      },
+      GARBAGE: {
+        title: 'Garbage Overflow near Kankaria Gate #3',
+        latLng: '23.0063° N, 72.6026° E',
+        ward: 'Maninagar',
+        zone: 'South Zone',
+        dept: 'Solid Waste Mgmt Dept',
+        yoloLabel: '98.2% Solid Waste Overflow — High Severity',
+        boxTitle: 'GARBAGE_MOUND [0.98]',
+        color: '#F59E0B'
+      },
+      STREETLIGHT: {
+        title: 'LED Streetlight Outage on Bopal Main Road',
+        latLng: '23.0338° N, 72.4634° E',
+        ward: 'Bodakdev / Bopal',
+        zone: 'New West Zone',
+        dept: 'Streetlight & Electrical Dept',
+        yoloLabel: '94.5% Streetlight Fault — Medium Severity',
+        boxTitle: 'LUMINAIRE_DARK [0.95]',
+        color: '#38BDF8'
+      }
+    };
+
+    function selectVisionScenario(key) {
+      appState.selectedVisionScenario = key;
+      ['POTHOLE', 'GARBAGE', 'STREETLIGHT'].forEach(k => {
+        const btn = document.getElementById('scenBtn_' + k);
+        if (k === key) {
+          btn.className = 'p-2.5 rounded-xl border-2 border-orange-500 bg-orange-50/70 text-left transition';
+        } else {
+          btn.className = 'p-2.5 rounded-xl border border-slate-200 hover:border-slate-300 bg-slate-50 text-left transition';
+        }
+      });
+      updateVisionPreviewUI();
+    }
+
+    function toggleDuplicateSimMode() {
+      appState.simulateDuplicate30m = document.getElementById('duplicateCheckToggle').checked;
+      updateVisionPreviewUI();
+    }
+
+    function updateVisionPreviewUI() {
+      const scen = VISION_SCENARIOS[appState.selectedVisionScenario];
+      document.getElementById('visionLayer1Text').textContent = `${scen.latLng} → ${scen.ward} (${scen.zone})`;
+      document.getElementById('visionLayer2Text').textContent = scen.yoloLabel;
+
+      const btnText = document.getElementById('submitVisionBtnText');
+      const subtext = document.getElementById('visionLayer3Subtext');
+
+      if (appState.simulateDuplicate30m) {
+        subtext.innerHTML = `<span class="text-amber-700 font-semibold"><i class="fa-solid fa-code-merge mr-1"></i>pHash Match (18.4m away): Ticket #AMC-GRV-90214 found! Will Merge & Upvote (+1) instead of creating spam.</span>`;
+        btnText.textContent = `Merge & Upvote Existing Ward Ticket (#AMC-GRV-90214)`;
+      } else {
+        subtext.textContent = `No duplicate report within 30m radius in last 48h. Ready to create new ward ticket.`;
+        btnText.textContent = `Submit Verified Grievance to ${scen.ward} (${scen.zone})`;
+      }
+
+      const preview = document.getElementById('visionCanvasPreview');
+      preview.innerHTML = `
+        <div class="w-full h-full flex flex-col justify-between text-xs font-mono text-white relative">
+          <div class="flex justify-between items-center text-[10px] text-slate-300">
+            <span class="bg-black/60 px-2 py-0.5 rounded">EXIF GPS: ${scen.latLng}</span>
+            <span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-2 py-0.5 rounded">AMC Ward Boundary ✓</span>
+          </div>
+
+          <!-- Simulated YOLOv8 Detection Bounding Box -->
+          <div class="mx-auto my-auto w-56 h-20 border-2 border-dashed rounded-lg flex flex-col justify-between p-1.5 relative" style="border-color: ${scen.color}; background: rgba(234,88,12,0.12)">
+            <span class="text-[10px] font-bold px-1.5 py-0.2 rounded self-start text-white" style="background:${scen.color}">${scen.boxTitle}</span>
+            <div class="text-[10px] text-center text-slate-200">${scen.title}</div>
+          </div>
+
+          <div class="flex justify-between items-center text-[10px] text-slate-400">
+            <span>Dept: ${scen.dept}</span>
+            <span>pHash Distance: ${appState.simulateDuplicate30m ? '18.4m (MERGE)' : '142.0m (UNIQUE)'}</span>
+          </div>
+        </div>
+      `;
+    }
+
+    function handleVisionGrievanceSubmit() {
+      const scen = VISION_SCENARIOS[appState.selectedVisionScenario];
+      const customNote = document.getElementById('customGrievanceNote').value.trim();
+
+      if (appState.simulateDuplicate30m) {
+        // Merge & Upvote existing ticket
+        const existing = appState.requests.find(r => r.id === 'AMC-GRV-90214') || appState.requests[0];
+        existing.upvotes = (existing.upvotes || 1) + 1;
+        renderAllViews();
+        logRPAEvent(`[PostGIS Spatial Deduplicator] Haversine d=18.4m (<=30m) & pHash=94% match. Merged citizen report into ${existing.id} (Upvotes: ${existing.upvotes})`);
+        showSimulatedToast(
+          'WHATSAPP',
+          `Spatial Duplicate Merged (${existing.id})`,
+          `Another citizen reported this issue 18.4m away. We upvoted ${existing.id} (Now ${existing.upvotes} Citizens) & subscribed you to live updates!`
+        );
+        return;
+      }
+
+      const newId = 'AMC-GRV-' + Math.floor(10000 + Math.random() * 89999);
+      const fullTitle = customNote ? `${scen.title} (${customNote})` : scen.title;
+
+      appState.requests.unshift({
+        id: newId,
+        title: fullTitle,
+        category: 'GRIEVANCE',
+        department: scen.dept,
+        zone: scen.zone,
+        ward: scen.ward,
+        stageIndex: 2, // Automatically passes Stage 1 (Submitted) & Stage 2 (AI OCR Verified) -> Stage 3 (Routed to Ward)
+        slaText: '24h 00m remaining before Auto-Escalation to Deputy Commissioner',
+        slaBreached: false,
+        escalatedTo: null,
+        connector: 'YOLOv8 + PostGIS Auto-Router',
+        upvotes: 1,
+        latLng: scen.latLng
+      });
+
+      document.getElementById('customGrievanceNote').value = '';
+      renderAllViews();
+      logRPAEvent(`[YOLOv8 Auto-Triage] Created Ticket ${newId} (${scen.yoloLabel}) → Auto-routed to ${scen.ward}, ${scen.zone}`);
+      showSimulatedToast(
+        'WHATSAPP',
+        `Grievance Registered & Auto-Routed (${newId})`,
+        `Verified via YOLOv8 & PostGIS. Routed directly to ${scen.dept} (${scen.ward}, ${scen.zone}). Track live in your Pizza-Tracker.`
+      );
+    }
+
+    // -----------------------------------------------------------------------
+    // 8. MULTILINGUAL VOICE & RAG AI CO-PILOT (BHASHINI + ACTION CARDS)
+    // -----------------------------------------------------------------------
+    function initAIChatGreeting() {
+      const stream = document.getElementById('aiChatStream');
+      stream.innerHTML = `
+        <div class="flex items-start gap-2.5">
+          <div class="w-7 h-7 rounded-lg bg-orange-600 text-white flex items-center justify-center font-bold flex-shrink-0">AI</div>
+          <div class="bg-white p-3 rounded-2xl rounded-tl-none border border-slate-200 shadow-sm space-y-1 max-w-[90%]">
+            <div class="font-bold text-slate-900 font-gujarati">નમસ્તે રાજેશભાઈ! (Namaste Rajeshbhai!)</div>
+            <p class="text-slate-600">I am <strong>Amdavad Sahayak</strong>, your Bhashini-enabled AI Agent. Click any Gujarati voice chip above or type below—I will pre-fill your forms using your <code class="font-mono">AMC-ID</code> and execute them right inside this chat.</p>
+          </div>
+        </div>
+      `;
+    }
+
+    function triggerVoicePromptChip(type) {
+      const wave = document.getElementById('voiceWaveformIndicator');
+      wave.classList.remove('hidden');
+      wave.classList.add('flex');
+
+      setTimeout(() => {
+        wave.classList.add('hidden');
+        wave.classList.remove('flex');
+        renderVoiceActionCardInChat(type);
+      }, 650);
+    }
+
+    function renderVoiceActionCardInChat(type) {
+      const stream = document.getElementById('aiChatStream');
+
+      if (type === 'TAX') {
+        stream.innerHTML += `
+          <div class="flex justify-end">
+            <div class="bg-civic-900 text-white px-3 py-2 rounded-2xl rounded-tr-none max-w-[85%]">
+              <span class="font-gujarati">🎤 "મારે પ્રોપર્ટી ટેક્સ ભરવો છે"</span>
+              <div class="text-[10px] text-orange-300 mt-0.5">Bhashini ASR: "Pay my Property Tax"</div>
+            </div>
+          </div>
+          <div class="flex items-start gap-2.5">
+            <div class="w-7 h-7 rounded-lg bg-orange-600 text-white flex items-center justify-center font-bold flex-shrink-0">AI</div>
+            <div class="bg-white p-3 rounded-2xl rounded-tl-none border-2 border-orange-200 shadow-sm space-y-2 w-full">
+              <div class="font-bold text-slate-900 font-gujarati">તમારા પ્રોપર્ટી ટેક્સની વિગતો તૈયાર છે:</div>
+              <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1 font-mono text-[11px]">
+                <div>Tenement: <strong>#0104-22-0891-0001-T</strong> (Navrangpura)</div>
+                <div>Pending Property Tax + Water: <strong class="text-emerald-700">₹5,470</strong></div>
+              </div>
+              <button onclick="openUnifiedPaymentModal()" class="w-full py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow transition">
+                <i class="fa-solid fa-bolt mr-1"></i>1-Click Pay ₹5,470 via UPI Action Card
+              </button>
+            </div>
+          </div>
+        `;
+      } else if (type === 'GUMASTA') {
+        stream.innerHTML += `
+          <div class="flex justify-end">
+            <div class="bg-civic-900 text-white px-3 py-2 rounded-2xl rounded-tr-none max-w-[85%]">
+              <span class="font-gujarati">🎤 "દુકાનનું ગુમાસ્તા લાયસન્સ રિન્યુ કરવું છે"</span>
+              <div class="text-[10px] text-orange-300 mt-0.5">Bhashini ASR: "Renew Shop Gumasta License"</div>
+            </div>
+          </div>
+          <div class="flex items-start gap-2.5">
+            <div class="w-7 h-7 rounded-lg bg-orange-600 text-white flex items-center justify-center font-bold flex-shrink-0">AI</div>
+            <div class="bg-white p-3 rounded-2xl rounded-tl-none border-2 border-indigo-200 shadow-sm space-y-2 w-full">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-slate-900">Zero-Navigation Action Card: Gumasta Renewal</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-800 font-mono">Pre-Filled via AMC-ID</span>
+              </div>
+              <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1 text-[11px]">
+                <div>Establishment: <strong>Patel Provision Stores (#GUM-2021-441)</strong></div>
+                <div>DigiLocker Attached: <strong class="text-emerald-700">Aadhaar e-KYC + Property Tax Receipt ✓</strong></div>
+              </div>
+              <button onclick="submitAIChatActionCard('Gumasta Shop License Fast-Track Renewal', 'PERMIT', 'Shops & Establishment Dept', 'West Zone', 'Navrangpura')" class="w-full py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow transition">
+                <i class="fa-solid fa-robot mr-1"></i>Submit via Playwright RPA Bridge
+              </button>
+            </div>
+          </div>
+        `;
+      } else if (type === 'WATER_LEAK') {
+        stream.innerHTML += `
+          <div class="flex justify-end">
+            <div class="bg-civic-900 text-white px-3 py-2 rounded-2xl rounded-tr-none max-w-[85%]">
+              <span class="font-gujarati">🎤 "નવરંગપુરામાં પાણીની લાઈન લીકેજ છે"</span>
+              <div class="text-[10px] text-orange-300 mt-0.5">Bhashini ASR: "Report Water Leakage in Navrangpura"</div>
+            </div>
+          </div>
+          <div class="flex items-start gap-2.5">
+            <div class="w-7 h-7 rounded-lg bg-orange-600 text-white flex items-center justify-center font-bold flex-shrink-0">AI</div>
+            <div class="bg-white p-3 rounded-2xl rounded-tl-none border-2 border-sky-200 shadow-sm space-y-2 w-full">
+              <div class="font-bold text-slate-900">Action Card: Emergency Water Pipeline Leakage</div>
+              <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1 text-[11px]">
+                <div>Ward Auto-Detected: <strong>Navrangpura (West Zone)</strong></div>
+                <div>Connection ID: <strong>#WTR-88310 • Priority: High (12h SLA)</strong></div>
+              </div>
+              <button onclick="submitAIChatActionCard('Water Supply Pipeline Leakage (Swastik Char Rasta)', 'GRIEVANCE', 'Water & Drainage Dept', 'West Zone', 'Navrangpura')" class="w-full py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shadow transition">
+                <i class="fa-solid fa-paper-plane mr-1"></i>1-Click Dispatch to Ward Hydraulic Engineer
+              </button>
+            </div>
+          </div>
+        `;
+      }
+
+      stream.scrollTop = stream.scrollHeight;
+    }
+
+    function sendCustomAIChat() {
+      const input = document.getElementById('aiChatInput');
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = '';
+
+      const stream = document.getElementById('aiChatStream');
+      stream.innerHTML += `
+        <div class="flex justify-end">
+          <div class="bg-civic-900 text-white px-3 py-2 rounded-2xl rounded-tr-none max-w-[85%]">${text}</div>
+        </div>
+      `;
+
+      const lower = text.toLowerCase();
+      if (lower.includes('tax') || lower.includes('bill') || lower.includes('pay')) {
+        renderVoiceActionCardInChat('TAX');
+      } else if (lower.includes('shop') || lower.includes('gumasta') || lower.includes('license')) {
+        renderVoiceActionCardInChat('GUMASTA');
+      } else {
+        stream.innerHTML += `
+          <div class="flex items-start gap-2.5">
+            <div class="w-7 h-7 rounded-lg bg-orange-600 text-white flex items-center justify-center font-bold flex-shrink-0">AI</div>
+            <div class="bg-white p-3 rounded-2xl rounded-tl-none border border-slate-200 shadow-sm space-y-2 w-full">
+              <div class="font-bold text-slate-900">AMC Citizen Charter RAG Response:</div>
+              <p class="text-slate-600">I have prepared a direct one-click service request for <strong>"${text}"</strong> linked to your <code class="font-mono">AMC-ID: AMC-2026-8941</code>.</p>
+              <button onclick="submitAIChatActionCard('Citizen AI Request: ${text.replace(/'/g, '')}', 'CERTIFICATE', 'AMC General Civic Desk', 'West Zone', 'Navrangpura')" class="w-full py-2 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs shadow transition">
+                <i class="fa-solid fa-bolt mr-1"></i>Submit Request via RPA Bridge
+              </button>
+            </div>
+          </div>
+        `;
+      }
+      stream.scrollTop = stream.scrollHeight;
+    }
+
+    function submitAIChatActionCard(title, category, dept, zone, ward) {
+      const newId = 'AMC-AI-' + Math.floor(10000 + Math.random() * 89999);
+      appState.requests.unshift({
+        id: newId,
+        title: title,
+        category: category,
+        department: dept,
+        zone: zone,
+        ward: ward,
+        stageIndex: 1, // '2. AI OCR & Pre-Verified'
+        slaText: '12h 00m remaining before Auto-Escalation to Deputy Commissioner',
+        slaBreached: false,
+        escalatedTo: null,
+        connector: 'Bhashini Agent + Playwright RPA',
+        upvotes: 1,
+        latLng: '23.0301° N, 72.5615° E'
+      });
+
+      renderAllViews();
+      logRPAEvent(`[Playwright Worker #2] Connecting to legacy e-Nagar non-API portal... Form "${title}" (${newId}) auto-filled... Acknowledgment scraped.`);
+      showSimulatedToast(
+        'WHATSAPP',
+        `AI Action Card Executed (${newId})`,
+        `"${title}" submitted via Bhashini AI Co-Pilot & synced with ${dept}.`
+      );
+    }
+
+    // -----------------------------------------------------------------------
+    // 9. DIGILOCKER & AMC CERTIFICATE WALLET
+    // -----------------------------------------------------------------------
+    function renderCertificateWallet() {
+      const grid = document.getElementById('certificateWalletGrid');
+      grid.innerHTML = appState.certificates.map(cert => `
+        <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/60 hover:bg-white hover:shadow-md transition flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold">
+                <i class="fa-solid fa-file-certificate fa-file-shield"></i>
+              </span>
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800">
+                <i class="fa-solid fa-check-double mr-1"></i>DigiLocker Verified
+              </span>
+            </div>
+            <h4 class="text-sm font-bold text-slate-900">${cert.title}</h4>
+            <p class="text-[11px] text-slate-500 mt-0.5">${cert.subtitle}</p>
+          </div>
+          <div class="mt-3 pt-2.5 border-t border-slate-200/80 flex items-center justify-between text-[11px]">
+            <span class="text-slate-400 font-mono">${cert.issuedDate}</span>
+            <button onclick="previewIssuedDocument('${cert.id}', '${cert.title}')" class="font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1">
+              <i class="fa-solid fa-qrcode"></i> View / QR
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function previewIssuedDocument(docId, docTitle) {
+      const modal = document.getElementById('documentPreviewModal');
+      document.getElementById('docModalTitle').textContent = 'AMC Verified Digital Certificate / Receipt';
+      document.getElementById('docModalBody').innerHTML = `
+        <div class="p-5 rounded-xl border-2 border-slate-800 bg-amber-50/30 space-y-3 text-xs relative">
+          <div class="flex items-center justify-between border-b border-slate-300 pb-3">
+            <div>
+              <div class="text-sm font-extrabold text-slate-900 uppercase">Ahmedabad Municipal Corporation</div>
+              <div class="text-[11px] font-gujarati text-orange-700 font-bold">અમદાવાદ મ્યુનિસિપલ કોર્પોરેશન • પ્રમાણપત્ર</div>
+            </div>
+            <span class="px-2.5 py-1 rounded bg-emerald-600 text-white font-mono text-[10px] font-bold">VALID DIGITAL SIGNATURE</span>
+          </div>
+
+          <div class="space-y-1.5 py-2">
+            <div class="flex justify-between"><span class="text-slate-500">Document / Certificate:</span><strong class="text-slate-900">${docTitle}</strong></div>
+            <div class="flex justify-between"><span class="text-slate-500">Reference Number:</span><strong class="font-mono text-slate-900">${docId}</strong></div>
+            <div class="flex justify-between"><span class="text-slate-500">Citizen Name:</span><strong class="text-slate-900">Rajeshbhai Patel (AMC-2026-8941)</strong></div>
+            <div class="flex justify-between"><span class="text-slate-500">Aadhaar Reference:</span><strong class="font-mono text-slate-900">XXXX-XXXX-8492 (Tokenized)</strong></div>
+            <div class="flex justify-between"><span class="text-slate-500">Municipal Ward:</span><strong class="text-slate-900">Navrangpura (West Zone)</strong></div>
+          </div>
+
+          <div class="p-3 rounded-lg bg-white border border-slate-200 flex items-center justify-between">
+            <div class="text-[11px] text-slate-600">
+              <div><strong>Cryptographic Hash (SHA-256):</strong></div>
+              <div class="font-mono text-[10px] text-slate-500">e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</div>
+            </div>
+            <i class="fa-solid fa-qrcode text-4xl text-slate-900"></i>
+          </div>
+        </div>
+      `;
+      modal.classList.remove('hidden');
+    }
+
+    function closeDocumentModal() {
+      document.getElementById('documentPreviewModal').classList.add('hidden');
+    }
+
+    // -----------------------------------------------------------------------
+    // 10. JAN SEVA KENDRA KIOSK (15-Min Delegated Consent OTP + AI OCR)
+    // -----------------------------------------------------------------------
+    function requestKioskConsentOTP() {
+      const mobile = document.getElementById('kioskCitizenMobile').value.trim();
+      appendKioskAuditLog(`Requested 15-min Delegated Consent OTP for citizen mobile +91 ${mobile}`);
+      showSimulatedToast(
+        'SMS',
+        'AMC Jan Seva Kendra Consent OTP: 482910',
+        `Share code 482910 with Operator JSK-NAVRANGPURA-04 to grant temporary 15-minute access to your AMC-ID profile.`,
+        `<button onclick="autoFillKioskDemoOTP()" class="mt-1.5 w-full py-1.5 rounded-lg bg-indigo-500 hover:bg-indigo-400 text-white font-bold text-[11px] transition">1-Click Auto-Fill OTP (482910)</button>`
+      );
+    }
+
+    function autoFillKioskDemoOTP() {
+      document.getElementById('kioskOtpInput').value = '482910';
+      verifyKioskConsentOTP();
+    }
+
+    function verifyKioskConsentOTP() {
+      const code = document.getElementById('kioskOtpInput').value.trim();
+      if (code !== '482910') {
+        showSimulatedToast('SYSTEM', 'Invalid OTP', 'Please enter 482910 or click Auto-Fill Demo OTP.');
+        return;
+      }
+      appState.kioskSession.unlocked = true;
+      appState.kioskSession.remainingSeconds = 900; // 15:00
+      document.getElementById('kioskUnlockedCitizenBox').classList.remove('hidden');
+      document.getElementById('kioskStatusDot').className = 'w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping';
+      document.getElementById('kioskSessionStatusLabel').textContent = 'Active Delegated Citizen Session';
+      appendKioskAuditLog(`OTP 482910 Verified. Unlocked 15:00 Delegated Token for AMC-ID AMC-2026-8941.`);
+      logRPAEvent(`[Keycloak OIDC Delegation] Issued 15-minute scoped operator token for JSK-NAVRANGPURA-04 on behalf of AMC-2026-8941`);
+    }
+
+    function revokeKioskSession() {
+      appState.kioskSession.unlocked = false;
+      document.getElementById('kioskUnlockedCitizenBox').classList.add('hidden');
+      document.getElementById('kioskOtpInput').value = '';
+      document.getElementById('kioskTimerDisplay').textContent = 'SESSION TERMINATED';
+      appendKioskAuditLog(`Operator manually terminated delegated citizen session.`);
+    }
+
+    function startKioskCountdownTimer() {
+      if (kioskInterval) clearInterval(kioskInterval);
+      kioskInterval = setInterval(() => {
+        if (appState.kioskSession && appState.kioskSession.unlocked && appState.kioskSession.remainingSeconds > 0) {
+          appState.kioskSession.remainingSeconds--;
+          const mins = String(Math.floor(appState.kioskSession.remainingSeconds / 60)).padStart(2, '0');
+          const secs = String(appState.kioskSession.remainingSeconds % 60).padStart(2, '0');
+          const timerEl = document.getElementById('kioskTimerDisplay');
+          if (timerEl) {
+            timerEl.textContent = `ACTIVE • ${mins}:${secs} REMAINING`;
+            timerEl.className = 'font-mono font-bold text-emerald-400';
+          }
+        }
+      }, 1000);
+    }
+
+    function appendKioskAuditLog(msg) {
+      const box = document.getElementById('kioskAuditLogList');
+      const now = new Date().toTimeString().split(' ')[0];
+      const div = document.createElement('div');
+      div.textContent = `[${now}] ${msg}`;
+      box.prepend(div);
+    }
+
+    function selectKioskService(srvKey) {
+      appState.selectedKioskService = srvKey;
+      ['SENIOR_CITIZEN', 'MARRIAGE_REG', 'BPL_INCOME'].forEach(k => {
+        const el = document.getElementById('kioskSrv_' + k);
+        if (k === srvKey) {
+          el.className = 'p-3 rounded-xl border-2 border-indigo-600 bg-indigo-50/60 text-left transition';
+        } else {
+          el.className = 'p-3 rounded-xl border border-slate-200 hover:border-slate-300 bg-slate-50 text-left transition';
+        }
+      });
+    }
+
+    function runKioskOCRCheck(mode) {
+      const box = document.getElementById('kioskOCRResultBox');
+      if (mode === 'PASS') {
+        appState.kioskSession.ocrPassed = true;
+        box.className = 'p-3 rounded-lg bg-white border border-emerald-200 text-xs space-y-1.5';
+        box.innerHTML = `
+          <div class="flex items-center justify-between font-bold text-emerald-800">
+            <span><i class="fa-solid fa-circle-check text-emerald-600 mr-1"></i> AI OCR Pre-Validation PASSED (Confidence: 99.1%)</span>
+            <span class="font-mono text-[11px]">DPI: 300 • Blur: 0.02</span>
+          </div>
+          <div class="grid grid-cols-3 gap-2 pt-1 text-[11px] text-slate-600">
+            <div><i class="fa-solid fa-check text-emerald-600 mr-1"></i>Name Match: <strong>Verified</strong></div>
+            <div><i class="fa-solid fa-check text-emerald-600 mr-1"></i>Signature Detected: <strong>Yes</strong></div>
+            <div><i class="fa-solid fa-check text-emerald-600 mr-1"></i>Ward Stamp: <strong>Navrangpura</strong></div>
+          </div>
+        `;
+        appendKioskAuditLog(`AI OCR Document Pre-Check PASSED (99.1% confidence).`);
+      } else {
+        appState.kioskSession.ocrPassed = false;
+        box.className = 'p-3 rounded-lg bg-red-50 border border-red-300 text-xs space-y-1.5';
+        box.innerHTML = `
+          <div class="flex items-center justify-between font-bold text-red-800">
+            <span><i class="fa-solid fa-circle-xmark text-red-600 mr-1"></i> AI PRE-CHECK BLOCKED DEFECTIVE SCAN (Prevents Dept Rejection)</span>
+            <span class="font-mono text-[11px]">Blur Score: 0.78 (HIGH)</span>
+          </div>
+          <div class="text-[11px] text-red-700">
+            <strong>Issue Detected:</strong> Applicant signature missing on Page 1 & Aadhaar proof is blurry. Please re-scan before submitting.
+          </div>
+        `;
+        appendKioskAuditLog(`AI OCR Pre-Validator blocked blurry/unsigned document scan.`);
+      }
+    }
+
+    function submitKioskApplicationAndPrint() {
+      if (!appState.kioskSession.ocrPassed) {
+        showSimulatedToast(
+          'SYSTEM',
+          'AI OCR Pre-Check Blocked Submission',
+          'Click "Scan Valid Document (Pass)" first so defective documents are not sent to the department.'
+        );
+        return;
+      }
+
+      const srvMap = {
+        SENIOR_CITIZEN: { title: 'Senior Citizen Identity Certificate', dept: 'Social Welfare Dept', fee: 50 },
+        MARRIAGE_REG: { title: 'Marriage Registration Certificate', dept: 'Central Marriage Registrar', fee: 200 },
+        BPL_INCOME: { title: 'BPL / Income Verification Certificate', dept: 'Revenue & Welfare Dept', fee: 20 }
+      };
+      const chosen = srvMap[appState.selectedKioskService];
+      const ticketId = 'AMC-JSK-' + Math.floor(10000 + Math.random() * 89999);
+
+      appState.requests.unshift({
+        id: ticketId,
+        title: `${chosen.title} (Filed via Jan Seva Kiosk)`,
+        category: 'CERTIFICATE',
+        department: chosen.dept,
+        zone: 'West Zone',
+        ward: 'Navrangpura',
+        stageIndex: 1, // '2. AI OCR & Pre-Verified'
+        slaText: '24h 00m remaining before Auto-Escalation to Deputy Commissioner',
+        slaBreached: false,
+        escalatedTo: null,
+        connector: 'Jan Seva Kiosk + Playwright RPA',
+        upvotes: 1,
+        latLng: '23.0301° N, 72.5615° E'
+      });
+
+      appState.revenueToday += chosen.fee;
+      renderAllViews();
+      appendKioskAuditLog(`Submitted ${ticketId} (${chosen.title}) & printed thermal receipt.`);
+      logRPAEvent(`[Playwright Worker #2] Kiosk Application ${ticketId} (${chosen.title}) injected into legacy portal • Operator: JSK-NAVRANGPURA-04`);
+
+      // Show Printable Thermal Receipt Modal
+      const modal = document.getElementById('documentPreviewModal');
+      document.getElementById('docModalTitle').textContent = 'Jan Seva Kendra — Official Kiosk Thermal Receipt';
+      document.getElementById('docModalBody').innerHTML = `
+        <div class="thermal-receipt p-5 rounded-xl border border-slate-300 font-mono text-xs text-slate-900 space-y-2.5 max-w-sm mx-auto">
+          <div class="text-center border-b border-dashed border-slate-400 pb-2">
+            <div class="font-extrabold text-sm">AHMEDABAD MUNICIPAL CORP.</div>
+            <div class="text-[11px]">JAN SEVA KENDRA • NAVRANGPURA WARD</div>
+            <div class="text-[10px] text-slate-500">Operator ID: JSK-NAVRANGPURA-04</div>
+          </div>
+          <div class="space-y-1 text-[11px]">
+            <div class="flex justify-between"><span>RECEIPT NO:</span><strong>${ticketId}</strong></div>
+            <div class="flex justify-between"><span>CITIZEN:</span><strong>RAJESHBHAI PATEL</strong></div>
+            <div class="flex justify-between"><span>AMC-ID:</span><strong>AMC-2026-8941</strong></div>
+            <div class="flex justify-between"><span>SERVICE:</span><strong>${chosen.title}</strong></div>
+            <div class="flex justify-between"><span>AI OCR CHECK:</span><strong>PASSED (99.1%)</strong></div>
+            <div class="flex justify-between"><span>FEE PAID:</span><strong>₹${chosen.fee}.00 (CASH/UPI)</strong></div>
+          </div>
+          <div class="border-t border-dashed border-slate-400 pt-2 text-center text-[10px]">
+            <div>SLA TARGET: 24 HOURS • TRACK LIVE ON AMC-ONE</div>
+            <div class="mt-2 tracking-[0.25em] font-extrabold text-sm">||| |||| || ||||| ||||</div>
+          </div>
+        </div>
+      `;
+      modal.classList.remove('hidden');
+
+      showSimulatedToast(
+        'WHATSAPP',
+        `Kiosk Application Submitted (${ticketId})`,
+        `Filed at Jan Seva Kendra (Navrangpura) by Operator JSK-NAVRANGPURA-04. Track live on your dashboard!`
+      );
+    }
+
+    // -----------------------------------------------------------------------
+    // 11. AMC OFFICER COMMAND CENTER (GIS Map + SLA Action Queue)
+    // -----------------------------------------------------------------------
+    function updateMapZoneCounts() {
+      const counts = {
+        'New West Zone': 0,
+        'West Zone': 0,
+        'North Zone': 0,
+        'Central Zone': 0,
+        'East Zone': 0,
+        'South Zone': 0
+      };
+      appState.requests.forEach(r => {
+        if (counts[r.zone] !== undefined) counts[r.zone]++;
+      });
+
+      const mapIds = {
+        'New West Zone': 'mapCount_NewWest',
+        'West Zone': 'mapCount_West',
+        'North Zone': 'mapCount_North',
+        'Central Zone': 'mapCount_Central',
+        'East Zone': 'mapCount_East',
+        'South Zone': 'mapCount_South'
+      };
+      Object.keys(mapIds).forEach(zone => {
+        const el = document.getElementById(mapIds[zone]);
+        if (el) el.textContent = counts[zone];
+      });
+
+      // Update Top Admin KPI Metrics
+      document.getElementById('adminMetricTotal').textContent = appState.requests.length;
+      document.getElementById('adminMetricRevenue').textContent = '₹' + appState.revenueToday.toLocaleString('en-IN');
+
+      const breachedCount = appState.requests.filter(r => r.slaBreached).length;
+      const slaEl = document.getElementById('adminMetricSLA');
+      if (breachedCount > 0) {
+        slaEl.textContent = `${Math.max(78, 100 - breachedCount * 9)}% (${breachedCount} Escalated)`;
+        slaEl.className = 'text-2xl font-extrabold text-red-600 mt-1';
+      } else {
+        slaEl.textContent = '96.4%';
+        slaEl.className = 'text-2xl font-extrabold text-emerald-600 mt-1';
+      }
+    }
+
+    function filterOfficerQueueByZone(zone) {
+      appState.selectedZoneFilter = zone;
+      document.getElementById('selectedZoneLabel').textContent = zone === 'ALL' ? 'Filter: ALL 6 AMC ZONES' : `Filter: ${zone.toUpperCase()}`;
+      renderOfficerQueue();
+    }
+
+    function renderOfficerQueue() {
+      const container = document.getElementById('officerQueueContainer');
+      const filtered = appState.selectedZoneFilter === 'ALL'
+        ? appState.requests
+        : appState.requests.filter(r => r.zone === appState.selectedZoneFilter);
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="p-8 rounded-2xl bg-slate-50 border border-dashed border-slate-300 text-center text-xs text-slate-500">
+            No active requests in <strong>${appState.selectedZoneFilter}</strong>. Click "Show All Zones" to view all city requests.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(req => {
+        const isResolved = req.stageIndex === 4;
+        const currentStageLabel = STAGE_LABELS[req.stageIndex];
+        return `
+          <div class="p-4 rounded-xl border transition-all ${
+            req.slaBreached
+              ? 'bg-red-50 border-red-300 shadow-sm'
+              : isResolved
+              ? 'bg-emerald-50/50 border-emerald-200'
+              : 'bg-slate-50 border-slate-200'
+          }">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="font-mono text-xs font-bold px-2 py-0.5 rounded bg-slate-900 text-white">${req.id}</span>
+                <span class="text-xs font-bold text-slate-900">${req.title}</span>
+              </div>
+              <span class="px-2 py-0.5 rounded text-[11px] font-bold ${
+                isResolved ? 'bg-emerald-600 text-white' : 'bg-indigo-100 text-indigo-800'
+              }">
+                Stage: ${currentStageLabel}
+              </span>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-600 mb-3">
+              <span><i class="fa-solid fa-location-dot text-orange-600 mr-1"></i><strong>${req.ward}</strong> (${req.zone}) • ${req.department}</span>
+              <span class="font-mono text-[11px] ${req.slaBreached ? 'text-red-700 font-bold' : 'text-slate-500'}">
+                ${req.slaBreached ? `⚠️ BREACHED → Escalated to ${req.escalatedTo}` : req.slaText}
+              </span>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-2.5 border-t border-slate-200/80">
+              <span class="text-[11px] font-mono text-slate-500">Citizen: Rajeshbhai Patel (AMC-2026-8941)</span>
+              <div class="flex flex-wrap items-center gap-2">
+                ${!isResolved ? `
+                  <button onclick="officerAdvanceStage('${req.id}')" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs shadow-sm transition">
+                    <i class="fa-solid fa-forward-step mr-1"></i>Advance Stage
+                  </button>
+                  <button onclick="officerApproveRequest('${req.id}')" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-sm transition">
+                    <i class="fa-solid fa-check-double mr-1"></i>Approve & Issue Certificate
+                  </button>
+                  ${!req.slaBreached ? `
+                    <button onclick="officerSimulateSLABreach('${req.id}')" class="px-2.5 py-1.5 rounded-lg bg-red-100 hover:bg-red-200 text-red-700 font-semibold text-xs border border-red-300 transition">
+                      <i class="fa-solid fa-bolt mr-1"></i>Simulate SLA Breach
+                    </button>
+                  ` : ''}
+                ` : `
+                  <span class="text-xs font-bold text-emerald-700"><i class="fa-solid fa-circle-check mr-1"></i>Resolved & Synced to Citizen Wallet</span>
+                `}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function officerAdvanceStage(reqId) {
+      const req = appState.requests.find(r => r.id === reqId);
+      if (!req || req.stageIndex >= 4) return;
+      req.stageIndex++;
+      const newLabel = STAGE_LABELS[req.stageIndex];
+
+      if (req.stageIndex === 4) {
+        officerApproveRequest(reqId);
+        return;
+      }
+
+      renderAllViews();
+      logRPAEvent(`[Kafka Event Bus] Officer advanced ${req.id} to "${newLabel}" → Pushed real-time update to Citizen Pizza-Tracker`);
+      showSimulatedToast(
+        'WHATSAPP',
+        `Status Updated: ${req.id}`,
+        `Your request "${req.title}" has moved to stage: ${newLabel}.`
+      );
+    }
+
+    function officerApproveRequest(reqId) {
+      const req = appState.requests.find(r => r.id === reqId);
+      if (!req) return;
+      req.stageIndex = 4; // 5. Resolved / Issued
+      req.slaBreached = false;
+      req.slaText = 'SLA MET • RESOLVED';
+
+      // Push issued certificate/resolution into Citizen's DigiLocker & AMC Wallet
+      const certId = 'CERT-ISSUED-' + req.id.split('-').pop();
+      if (!appState.certificates.some(c => c.id === certId)) {
+        appState.certificates.unshift({
+          id: certId,
+          title: req.title,
+          subtitle: `Approved via AMC Command Center • Ref #${req.id}`,
+          issuedDate: '14 Oct 2026 (Just Now)',
+          issuer: req.department,
+          verified: true
+        });
+      }
+
+      renderAllViews();
+      logRPAEvent(`[AMC Digital Signer] Approved ${req.id} (${req.title}) → Issued Certificate #${certId} into Citizen DigiLocker Wallet`);
+      showSimulatedToast(
+        'WHATSAPP',
+        `Approved & Issued ✓ (${req.id})`,
+        `Good news Rajeshbhai! "${req.title}" is APPROVED by ${req.department}. Digital certificate added to your AMC Wallet.`
+      );
+    }
+
+    function officerSimulateSLABreach(reqId) {
+      const req = appState.requests.find(r => r.id === reqId);
+      if (!req) return;
+      req.slaBreached = true;
+      req.slaText = '00h 00m • SLA BREACHED';
+      req.escalatedTo = `Deputy Municipal Commissioner (${req.zone})`;
+
+      renderAllViews();
+      logRPAEvent(`[Temporal SLA Escalation Engine] SLA Timer expired for ${req.id}! Auto-escalated from Ward Clerk to ${req.escalatedTo}`);
+      showSimulatedToast(
+        'WHATSAPP',
+        `🚨 SLA Breach Auto-Escalation (${req.id})`,
+        `Because "${req.title}" exceeded its statutory SLA window, AMC-One Grid automatically escalated it to the ${req.escalatedTo}.`
+      );
+    }
+
+    function triggerGlobalSLABreachDemo() {
+      const target = appState.requests.find(r => !r.slaBreached && r.stageIndex < 4) || appState.requests[0];
+      if (target) {
+        officerSimulateSLABreach(target.id);
+      }
+    }
+
+    // -----------------------------------------------------------------------
+    // 12. PLAYWRIGHT RPA LEGACY BRIDGE TERMINAL CONSOLE
+    // -----------------------------------------------------------------------
+    function toggleRPADrawer() {
+      const drawer = document.getElementById('rpaConsoleDrawer');
+      drawer.classList.toggle('translate-y-full');
+    }
+
+    function logRPAEvent(logLine) {
+      const now = new Date().toTimeString().split(' ')[0];
+      appState.rpaLogs.unshift(`[${now}] ${logLine}`);
+      renderRPATerminal();
+    }
+
+    function renderRPATerminal() {
+      const container = document.getElementById('rpaTerminalLogs');
+      const badge = document.getElementById('rpaBadgeCount');
+      if (badge) badge.textContent = appState.rpaLogs.length;
+
+      container.innerHTML = appState.rpaLogs.map((line, idx) => `
+        <div class="${idx === 0 ? 'text-emerald-400 font-bold' : 'text-slate-300'}">
+          <span class="text-orange-500 mr-1.5">❯</span>${line}
+        </div>
+      `).join('');
+    }
+
+    function runManualRPASyncTest() {
+      logRPAEvent(`[Playwright Worker #3] Launching headless Chromium → Authenticating with legacy AMC Birth/Death non-API portal...`);
+      setTimeout(() => {
+        logRPAEvent(`[Playwright Worker #3] Form payload injected for AMC-ID AMC-2026-8941 • Scraped legacy acknowledgment #ENAGAR-2026-7781 in 620ms.`);
+        showSimulatedToast(
+          'SYSTEM',
+          'Playwright RPA Legacy Sync Complete',
+          'Headless worker successfully bridged legacy non-API portal in 620ms without citizen timeout.'
+        );
+      }, 600);
+    }
+  </script>
+</body>
+</html>
